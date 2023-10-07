@@ -1,5 +1,11 @@
 package paquete1;
 
-public class Libro {
+import paquete2.Autor;
 
+public class Libro {
+	private String isbn;
+	private String titulo;
+	private Autor autor;
+	private int año;
+	//private Copia[] copias;
 }

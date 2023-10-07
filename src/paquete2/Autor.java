@@ -1,5 +1,8 @@
 package paquete2;
 
-public class Autor {
+import paquete1.Libro;
 
+public class Autor {
+	private String nombre;
+	private Libro[] obras;
 }
