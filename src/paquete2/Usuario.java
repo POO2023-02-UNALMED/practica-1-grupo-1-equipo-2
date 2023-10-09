@@ -7,12 +7,17 @@ public class Usuario {
 	private int contraseña;
 	//private Prestamo prestamo;
 	//private Multa multa;
+	private static int contadorUsuarios;
+	private int idUsuario;
 	
 	public Usuario(String nombre, String correo, int cedula, int contraseña) {
 		this.nombre = nombre;
 		this.correo = correo;
 		this.cedula = cedula;
 		this.contraseña = contraseña;
+		contadorUsuarios++;
+		idUsuario = contadorUsuarios;
+		
 		
 	}
 	
@@ -29,7 +34,7 @@ public class Usuario {
         return cedula;
     }
 
-    public int getClave() {
+    public int getContraseña() {
         return contraseña;
     }
 
@@ -56,7 +61,7 @@ public class Usuario {
         this.cedula = cedula;
     }
 
-    public void setClave(int contraseña) {
+    public void setContraseña(int contraseña) {
         this.contraseña = contraseña;
     }
 

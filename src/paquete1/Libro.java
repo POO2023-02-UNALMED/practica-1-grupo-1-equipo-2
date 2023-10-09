@@ -5,9 +5,18 @@ import paquete2.Autor;
 public class Libro {
 	private String isbn;
 	private String titulo;
-	private Autor autor;
+	private String autor;
 	private int año;
-	//private Copia[] copias;
+	private int copias;
+	
+	public Libro(String isbn, String titulo, String autor, int año, int copias) {
+		this.isbn = isbn;
+		this.titulo = titulo;
+		this.autor = autor;
+		this.año = año;
+		this.copias = copias;
+		
+	}
 	
 	// Metodos get
     public String getIsbn() {
