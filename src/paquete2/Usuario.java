@@ -1,12 +1,20 @@
 package paquete2;
 
 public class Usuario {
-	private String correo;
 	private String nombre;
+	private String correo;
 	private int cedula;
-	private String clave;
+	private int contraseña;
 	//private Prestamo prestamo;
 	//private Multa multa;
+	
+	public Usuario(String nombre, String correo, int cedula, int contraseña) {
+		this.nombre = nombre;
+		this.correo = correo;
+		this.cedula = cedula;
+		this.contraseña = contraseña;
+		
+	}
 	
 	// Metodos get
     public String getCorreo() {
@@ -21,8 +29,8 @@ public class Usuario {
         return cedula;
     }
 
-    public String getClave() {
-        return clave;
+    public int getClave() {
+        return contraseña;
     }
 
     /*
@@ -48,8 +56,8 @@ public class Usuario {
         this.cedula = cedula;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setClave(int contraseña) {
+        this.contraseña = contraseña;
     }
 
     /*
