@@ -1,6 +1,6 @@
-package paquete2;
+package gestorAplicacion.paquete2;
 
-import paquete1.Libro;
+import gestorAplicacion.paquete1.Libro;
 
 public class Autor {
 	private String nombre;

@@ -1,4 +1,4 @@
-package paquete2;
+package gestorAplicacion.paquete2;
 
 public class Usuario {
 	private String nombre;

@@ -1,9 +1,9 @@
-package paquete2;
+package gestorAplicacion.paquete2;
 
 import java.util.Date;
 import java.time.LocalTime;
-import paquete1.Computador;
-import paquete1.Copia;
+import gestorAplicacion.paquete1.Computador;
+import gestorAplicacion.paquete1.Copia;
 
 public class Prestamo {
 	private String tipo;

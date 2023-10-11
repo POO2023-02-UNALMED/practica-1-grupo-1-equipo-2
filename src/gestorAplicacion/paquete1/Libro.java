@@ -1,6 +1,5 @@
-package paquete1;
-
-import paquete2.Autor;
+package gestorAplicacion.paquete1;
+import gestorAplicacion.paquete2.Autor;
 
 public class Libro {
 	private String isbn;
@@ -50,9 +49,6 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
-    }
 
     public void setAño(int año) {
         this.año = año;

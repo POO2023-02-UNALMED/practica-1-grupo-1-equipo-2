@@ -1,31 +1,32 @@
-package app;
-import paquete1.*;
-import paquete2.*;
+package uiMain;
+import gestorAplicacion.paquete1.*;
+import gestorAplicacion.paquete2.*;
 import java.util.concurrent.TimeUnit;
 import java.util.Scanner;
+import java.util.*;
 
 
 
 public class Main {
 	static Scanner sc = new Scanner(System.in);
 	static BaseDatos baseDeDatos = new BaseDatos();
-	
+	static ArrayList<Libro> libros = new ArrayList<Libro>();	
 	static {
-		baseDeDatos.agregarLibro(new Libro("978-0-307-58973-2", "Sapiens: De animales a dioses", "Yuval Noah Harari", 2014, 920));
-		baseDeDatos.agregarLibro(new Libro("978-0-7475-3269-6", "Harry Potter y la piedra filosofal", "J.K. Rowling", 1997, 1000));
-		baseDeDatos.agregarLibro(new Libro("978-84-204-3471-6", "Cien años de soledad", "Gabriel García Márquez", 1967, 800));
-		baseDeDatos.agregarLibro(new Libro("978-3-16-148410-0", "1984", "George Orwell", 1949, 900));
-		baseDeDatos.agregarLibro(new Libro("978-0-553-21311-6", "Matar a un ruiseñor", "Harper Lee", 1960, 750));
-		baseDeDatos.agregarLibro(new Libro("978-1-84749-593-7", "Ensayo sobre la ceguera", "José Saramago", 1995, 700));
-		baseDeDatos.agregarLibro(new Libro("978-1-933633-92-9", "Los hombres me explican cosas", "Rebecca Solnit", 2014, 600));
-		baseDeDatos.agregarLibro(new Libro("978-84-204-9184-8", "Don Quijote de la Mancha", "Miguel de Cervantes", 1605, 950));
-		baseDeDatos.agregarLibro(new Libro("978-0-06-112008-4", "El juego de Ender", "Orson Scott Card", 1985, 720));
-		baseDeDatos.agregarLibro(new Libro("978-84-339-7049-4", "Crónica de una muerte anunciada", "Gabriel García Márquez", 1981, 680));
-		baseDeDatos.agregarLibro(new Libro("978-84-3760494-7", "Rayuela", "Julio Cortázar", 1963, 850));
-		baseDeDatos.agregarLibro(new Libro("978-0-8129-7449-8", "El gran Gatsby", "F. Scott Fitzgerald", 1925, 500));
-		baseDeDatos.agregarLibro(new Libro("978-0-014-303995-9", "Sapiens: De animales a dioses", "Yuval Noah Harari", 2011, 920));
-		baseDeDatos.agregarLibro(new Libro("978-84-204-5298-7", "El amor en los tiempos del cólera", "Gabriel García Márquez", 1985, 720));
-		baseDeDatos.agregarLibro(new Libro("978-0-525-43396-9", "To Kill a Mockingbird", "Harper Lee", 1960, 780));
+		libros.add(new Libro("978-0-307-58973-2", "Sapiens: De animales a dioses", "Yuval Noah Harari", 2014, 920));
+		libros.add(new Libro("978-0-7475-3269-6", "Harry Potter y la piedra filosofal", "J.K. Rowling", 1997, 1000));
+		libros.add(new Libro("978-84-204-3471-6", "Cien años de soledad", "Gabriel García Márquez", 1967, 800));
+		libros.add(new Libro("978-3-16-148410-0", "1984", "George Orwell", 1949, 900));
+		libros.add(new Libro("978-0-553-21311-6", "Matar a un ruiseñor", "Harper Lee", 1960, 750));
+		libros.add(new Libro("978-1-84749-593-7", "Ensayo sobre la ceguera", "José Saramago", 1995, 700));
+		libros.add(new Libro("978-1-933633-92-9", "Los hombres me explican cosas", "Rebecca Solnit", 2014, 600));
+		libros.add(new Libro("978-84-204-9184-8", "Don Quijote de la Mancha", "Miguel de Cervantes", 1605, 950));
+		libros.add(new Libro("978-0-06-112008-4", "El juego de ender", "Orson Scott Card", 1985, 720));
+		libros.add(new Libro("978-84-339-7049-4", "Crónica de una muerte anunciada", "Gabriel García Márquez", 1981, 680));
+		libros.add(new Libro("978-84-3760494-7", "Rayuela", "Julio Cortázar", 1963, 850));
+		libros.add(new Libro("978-0-8129-7449-8", "El gran Gatsby", "F. Scott Fitzgerald", 1925, 500));
+		libros.add(new Libro("978-0-014-303995-9", "Sapiens: De animales a dioses", "Yuval Noah Harari", 2011, 920));
+		libros.add(new Libro("978-84-204-5298-7", "El amor en los tiempos del cólera", "Gabriel García Márquez", 1985, 720));
+		libros.add(new Libro("978-0-525-43396-9", "To Kill a Mockingbird", "Harper Lee", 1960, 780));
 
 	}
 	
@@ -77,15 +78,18 @@ public class Main {
 		
 		switch(op) {
 		case 1:
-		
+			System.out.println("Desea el nombre del libro que desees consultar: ");
+			sc.nextLine();
+			pedirLibro(sc.nextLine());
+			break;
 		case 2:
-			
+			break;
 		case 3:
-			
+			break;
 		case 4:
-			
+			break;
 		case 5:
-			
+			break;
 		default:
 			System.out.println("Opcion incorrecta, por favor, escoge otra opcion");
 			
@@ -99,10 +103,25 @@ public class Main {
 
 }
 	
-	private static void buscarLibro(String nombre) {
+	private static void pedirLibro(String nombre) {
+		Libro libro = null;
+		System.out.println(nombre);
+		System.out.println(nombre.length());
+		System.out.println(nombre.hashCode());
+
+		for (Libro l : libros) {
+			if (l.getTitulo().equalsIgnoreCase(nombre)) {
+				libro = l;		
+				System.out.println("Libro encontrado");
+				
+			}
+
+			
+		}
 		
 		
 	}
+		
 	
 	private static boolean iniciarSesion() {
 		System.out.println("Por favor ingrese su usuario: ");
@@ -164,7 +183,8 @@ public class Main {
 		
 		
 	}
-
+	
+	
 
 		
 }

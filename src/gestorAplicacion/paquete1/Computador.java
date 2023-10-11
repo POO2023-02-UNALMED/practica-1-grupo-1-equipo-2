@@ -1,4 +1,4 @@
-package paquete1;
+package gestorAplicacion.paquete1;
 
 public class Computador {
 	private String id;
