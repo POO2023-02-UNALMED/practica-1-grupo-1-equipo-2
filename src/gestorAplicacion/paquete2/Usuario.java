@@ -1,11 +1,12 @@
 package gestorAplicacion.paquete2;
+import java.util.*;
 
 public class Usuario {
 	private String nombre;
 	private String correo;
 	private int cedula;
 	private int contraseña;
-	//private Prestamo prestamo;
+	private ArrayList<Prestamo> prestamos;
 	//private Multa multa;
 	private static int contadorUsuarios;
 	private int idUsuario;
@@ -17,6 +18,7 @@ public class Usuario {
 		this.contraseña = contraseña;
 		contadorUsuarios++;
 		idUsuario = contadorUsuarios;
+		prestamos = new ArrayList<Prestamo>();
 		
 		
 	}
@@ -74,4 +76,17 @@ public class Usuario {
         this.multa = multa;
     }
     */
+    
+    public void añadirPrestamo(Prestamo prestamo) {
+    	prestamos.add(prestamo);
+    }
+    
+    public void mostrarPrestamos() {
+    	if (prestamos.isEmpty()) {
+    		System.out.println("No tienes libros prestados");
+    	}
+		for (Prestamo p : prestamos) {
+			System.out.println("El libro " + p.getCopia().getTitulo() + " Debe devolverse el: " + p.getFechaFinal());
+		}
+	}
 }

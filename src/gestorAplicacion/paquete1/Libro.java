@@ -8,6 +8,10 @@ public class Libro {
 	private int año;
 	private int copias;
 	
+	public Libro() {
+		
+	}
+	
 	public Libro(String isbn, String titulo, String autor, int año, int copias) {
 		this.isbn = isbn;
 		this.titulo = titulo;
@@ -26,7 +30,7 @@ public class Libro {
         return titulo;
     }
 
-    public Autor getAutor() {
+    public String getAutor() {
         return autor;
     }
 
@@ -59,4 +63,9 @@ public class Libro {
         this.copias = copias;
     }
     */
+    
+    public void setAutor(String autor) {
+		this.autor = autor;
+	}
+    
 }

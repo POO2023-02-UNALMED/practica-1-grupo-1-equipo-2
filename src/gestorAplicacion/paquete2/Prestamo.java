@@ -14,6 +14,14 @@ public class Prestamo {
     private Date fechaFinal;
     private Computador equipo;
     private LocalTime hora;
+    private Copia copia;
+    
+    public Prestamo(String tipo, Usuario usuario, Date fechaFinal, Copia copia) {
+    	this.tipo = tipo;
+    	this.usuario = usuario;
+    	this.fechaFinal = fechaFinal;
+    	this.copia = copia;
+    }
     
     // Metodos get
     public String getTipo() {
@@ -28,8 +36,8 @@ public class Prestamo {
         return usuario;
     }
 
-    public Copia getLibro() {
-        return libro;
+    public Copia getCopia() {
+        return copia;
     }
 
     public Date getFechaInicio() {
