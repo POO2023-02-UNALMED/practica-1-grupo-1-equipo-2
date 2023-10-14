@@ -1,91 +1,84 @@
 package gestorAplicacion.paquete2;
+import gestorAplicacion.paquete1.*;
 
 import java.util.Date;
 import java.time.LocalTime;
 import gestorAplicacion.paquete1.Computador;
 import gestorAplicacion.paquete1.Copia;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 public class Prestamo {
-	private String tipo;
-    private String id;
-    private Usuario usuario;
-    private Copia libro;
-    private Date fechaInicio;
-    private Date fechaFinal;
-    private Computador equipo;
-    private LocalTime hora;
-    private Copia copia;
-    
-    public Prestamo(String tipo, Usuario usuario, Date fechaFinal, Copia copia) {
-    	this.tipo = tipo;
-    	this.usuario = usuario;
-    	this.fechaFinal = fechaFinal;
-    	this.copia = copia;
+    private int idPrestamo; // Identificador único del préstamo
+    private String tipo; // Tipo de préstamo (por ejemplo, "Evento" o "Particular")
+    private Usuario usuario; // Usuario que realiza el préstamo
+    private Date fechaInicio; // Fecha de inicio del préstamo
+    private Date fechaFin; // Fecha de finalización del préstamo
+    private ArrayList<Copia> copiasPrestadas; // Copias prestadas en el préstamo
+    private ArrayList<PC> pcsPrestados; // Computadoras prestadas en el préstamo
+
+    // Constructor de la clase Prestamo
+    public Prestamo(Usuario usuario, String tipo, Date fechaInicio, Date fechaFin, ArrayList<Copia> copias, ArrayList<PC> pcs) {
+        this.tipo = tipo;
+        this.usuario = usuario;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.copiasPrestadas = copias;
+        this.pcsPrestados = pcs;
+        // Generar un identificador único para el préstamo (puedes implementar esta lógica)
+        this.idPrestamo = generarIdentificadorUnico();
     }
-    
-    // Metodos get
+
+    // Método para obtener el identificador único del préstamo
+    public int getIdPrestamo() {
+        return idPrestamo;
+    }
+
+    // Método para obtener el tipo de préstamo
     public String getTipo() {
         return tipo;
     }
 
-    public String getId() {
-        return id;
-    }
-
+    // Método para obtener el usuario que realiza el préstamo
     public Usuario getUsuario() {
         return usuario;
     }
 
-    public Copia getCopia() {
-        return copia;
-    }
-
+    // Método para obtener la fecha de inicio del préstamo
     public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public Date getFechaFinal() {
-        return fechaFinal;
+    // Método para obtener la fecha de finalización del préstamo
+    public Date getFechaFin() {
+        return fechaFin;
     }
 
-    public Computador getEquipo() {
-        return equipo;
+    // Método para obtener las copias prestadas en el préstamo
+    public ArrayList<Copia> getCopiasPrestadas() {
+        return copiasPrestadas;
     }
 
-    public LocalTime getHora() {
-        return hora;
+    // Método para obtener las computadoras prestadas en el préstamo
+    public ArrayList<PC> getPcsPrestados() {
+        return pcsPrestados;
     }
 
-    // Metodos set
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    // Método para verificar si el préstamo contiene ciertos recursos
+    public boolean contieneRecursos(ArrayList<Copia> copias, ArrayList<PC> pcs) {
+        return copiasPrestadas.containsAll(copias) && pcsPrestados.containsAll(pcs);
     }
 
-    public void setId(String id) {
-        this.id = id;
+    // Método para finalizar el préstamo
+    public void finalizarPrestamo() {
+        // Lógica para finalizar el préstamo (puedes implementar esta lógica)
+        // Esto podría incluir la actualización de la disponibilidad de las copias y las PCs prestadas
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public void setLibro(Copia libro) {
-        this.libro = libro;
-    }
-
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public void setFechaFinal(Date fechaFinal) {
-        this.fechaFinal = fechaFinal;
-    }
-
-    public void setEquipo(Computador equipo) {
-        this.equipo = equipo;
-    }
-
-    public void setHora(LocalTime hora) {
-        this.hora = hora;
+    // Método para generar un identificador único para el préstamo (puedes implementar esta lógica)
+    private int generarIdentificadorUnico() {
+        // Implementa la lógica para generar identificadores únicos de préstamo
+        return 0; // Debes ajustar esto según tu implementación
     }
 }

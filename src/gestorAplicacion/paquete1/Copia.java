@@ -1,32 +1,58 @@
 package gestorAplicacion.paquete1;
-public class Copia extends Libro{
-	private Libro copiaDe;
-	private int copias;
-	private boolean estado;
-	private String sede;
-	
-	public Copia(Libro libro, String sede) {
-		super(libro.getIsbn(),libro.getTitulo(), libro.getAutor(),libro.getAño(), 1);
-		this.sede = sede;
-	}
-	
 
-    public boolean isEstado() {
-        return estado;
+public class Copia {
+    private int idCopia; // Identificador único de la copia
+    private Libro copiaDe; // El libro del que es una copia
+    private boolean disponibleEvento; // Indica si la copia está disponible para eventos
+    private boolean disponibleParticular; // Indica si la copia está disponible para préstamos particulares
+    private String sede; // La sede a la que está asignada esta copia
+
+    // Constructor de la clase Copia
+    public Copia(int idCopia, Libro copiaDe, String sede) {
+        this.idCopia = idCopia;
+        this.copiaDe = copiaDe;
+        this.disponibleEvento = true; // Por defecto, disponible para eventos
+        this.disponibleParticular = true; // Por defecto, disponible para préstamos particulares
+        this.sede = sede;
     }
 
-
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    // Método para obtener el identificador único de la copia
+    public int getIdCopia() {
+        return idCopia;
     }
-    
-    public void setSede(String sede) {
-		this.sede = sede;
-	}
-    
+
+    // Método para obtener el libro del que es una copia
+    public Libro getCopiaDe() {
+        return copiaDe;
+    }
+
+    // Método para verificar si la copia está disponible para eventos
+    public boolean isDisponibleEvento() {
+        return disponibleEvento;
+    }
+
+    // Método para establecer la disponibilidad de la copia para eventos
+    public void setDisponibleEvento(boolean disponibleEvento) {
+        this.disponibleEvento = disponibleEvento;
+    }
+
+    // Método para verificar si la copia está disponible para préstamos particulares
+    public boolean isDisponibleParticular() {
+        return disponibleParticular;
+    }
+
+    // Método para establecer la disponibilidad de la copia para préstamos particulares
+    public void setDisponibleParticular(boolean disponibleParticular) {
+        this.disponibleParticular = disponibleParticular;
+    }
+
+    // Método para obtener la sede a la que está asignada esta copia
     public String getSede() {
-		return sede;
-	}
-    
+        return sede;
+    }
+
+    // Método para establecer la sede a la que está asignada esta copia
+    public void setSede(String sede) {
+        this.sede = sede;
+    }
 }
