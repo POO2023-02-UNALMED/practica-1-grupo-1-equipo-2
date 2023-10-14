@@ -5,15 +5,15 @@ public class Copia {
     private Libro copiaDe; // El libro del que es una copia
     private boolean disponibleEvento; // Indica si la copia está disponible para eventos
     private boolean disponibleParticular; // Indica si la copia está disponible para préstamos particulares
-    private String sede; // La sede a la que está asignada esta copia
+    private Biblioteca ubicacion; // La sede a la que está asignada esta copia
 
     // Constructor de la clase Copia
-    public Copia(int idCopia, Libro copiaDe, String sede) {
+    public Copia(int idCopia, Libro copiaDe, Biblioteca ubicacion) {
         this.idCopia = idCopia;
         this.copiaDe = copiaDe;
         this.disponibleEvento = true; // Por defecto, disponible para eventos
         this.disponibleParticular = true; // Por defecto, disponible para préstamos particulares
-        this.sede = sede;
+        this.ubicacion = ubicacion;
     }
 
     // Método para obtener el identificador único de la copia
@@ -47,12 +47,12 @@ public class Copia {
     }
 
     // Método para obtener la sede a la que está asignada esta copia
-    public String getSede() {
-        return sede;
+    public Biblioteca getUbicacion() {
+        return ubicacion;
     }
 
     // Método para establecer la sede a la que está asignada esta copia
-    public void setSede(String sede) {
-        this.sede = sede;
+    public void setUbicacion(Biblioteca ubicacion) {
+        this.ubicacion = ubicacion;
     }
 }

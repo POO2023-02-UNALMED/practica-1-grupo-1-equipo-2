@@ -9,7 +9,9 @@ public class Biblioteca {
     private String nombre;
     private String sede;
     private ArrayList<Libro> libros;
+    private ArrayList<Copia> copias;
     private ArrayList<Computador> computadores;
+    private ArrayList<PC> pcs;
     private ArrayList<Prestamo> prestamos;
 
     // Constructor de la clase Biblioteca
@@ -47,6 +49,15 @@ public class Biblioteca {
     public void setLibros(ArrayList<Libro> libros) {
         this.libros = libros;
     }
+    
+    // Métodos para obtener y establecer la lista de copias de la biblioteca
+    public ArrayList<Copia> getCopias() {
+        return copias;
+    }
+
+    public void setCopias(ArrayList<Copia> copias) {
+        this.copias = copias;
+    }
 
     // Métodos para obtener y establecer la lista de computadores de la biblioteca
     public ArrayList<Computador> getComputadores() {
@@ -55,6 +66,15 @@ public class Biblioteca {
 
     public void setComputadores(ArrayList<Computador> computadores) {
         this.computadores = computadores;
+    }
+    
+    // Métodos para obtener y establecer la lista de pcs de la biblioteca
+    public ArrayList<PC> getPCS() {
+        return pcs;
+    }
+
+    public void setPCS(ArrayList<PC> pcs) {
+        this.pcs = pcs;
     }
 
     // Métodos para obtener y establecer la lista de préstamos de la biblioteca

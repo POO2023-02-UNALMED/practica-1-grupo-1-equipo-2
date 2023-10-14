@@ -1,19 +1,21 @@
 package gestorAplicacion.paquete2;
 
+import java.util.ArrayList;
+
 import gestorAplicacion.paquete1.Libro;
 
 public class Autor {
     private String nombre; // Nombre del autor
     private String nacionalidad; // Nacionalidad del autor
     private String corriente; // Corriente literaria del autor
-    private Libro[] obras; // Array de obras escritas por el autor
+    private ArrayList<Libro> obras; // Array de obras escritas por el autor
 
     // Constructor de la clase Autor
     public Autor(String nombre, String nacionalidad, String corriente) {
         this.nombre = nombre;
         this.nacionalidad = nacionalidad;
         this.corriente = corriente;
-        this.obras = new Libro[10]; // Se asume un máximo de 10 obras por autor
+        this.obras = new ArrayList<>();
     }
 
     // Método para obtener el nombre del autor
@@ -47,12 +49,12 @@ public class Autor {
     }
 
     // Método para obtener la lista de obras escritas por el autor
-    public Libro[] getObras() {
+    public ArrayList<Libro> getObras() {
         return obras;
     }
 
     // Método para establecer la lista de obras escritas por el autor
-    public void setObras(Libro[] obras) {
+    public void setObras(ArrayList<Libro> obras) {
         this.obras = obras;
     }
 }
