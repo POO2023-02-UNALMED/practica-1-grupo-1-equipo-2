@@ -92,7 +92,12 @@ public class Biblioteca {
     public void añadirSala(Sala sala) {
     	salas.add(sala);
     }
-    
+    public void añadirCopia(Copia copia) {
+    	copias.add(copia);
+    }
+    public void añadirPC(PC pc) {
+    	pcs.add(pc);
+    }
     public ArrayList<Sala> getSalas() {
 		return salas;
 	}

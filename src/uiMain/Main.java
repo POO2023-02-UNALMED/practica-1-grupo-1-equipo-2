@@ -11,6 +11,7 @@ public class Main {
 	static ArrayList<Libro> libros = new ArrayList<Libro>();	
 	static ArrayList<Biblioteca> bibliotecas = new ArrayList<Biblioteca>();
 	static ArrayList<Computador> computadores = new ArrayList<Computador>();
+	static ArrayList<Autor> autores = new ArrayList<Autor>();
 	static Usuario user = new Usuario("Usuario Prueba", "prueba@gmail.com", 1111, 0000);
 	
 	// Método para inicializar libros
@@ -28,6 +29,20 @@ public class Main {
         Autor autor10 = new Autor("Yuval Noah Harari", "Israel", "Ensayo");
         Autor autor11 = new Autor("Gabriel García Márquez", "Colombia", "Realismo mágico");
         Autor autor12 = new Autor("George Orwell", "Reino Unido", "Distopía");
+        
+        autores.add(autor1);
+        autores.add(autor2);
+        autores.add(autor3);
+        autores.add(autor4);
+        autores.add(autor5);
+        autores.add(autor6);
+        autores.add(autor7);
+        autores.add(autor8);
+        autores.add(autor9);
+        autores.add(autor10);
+        autores.add(autor11);
+        autores.add(autor12);
+        		
         
         // Inicializar libros
         libros.add(new Libro("Sapiens: De animales a dioses", 1, "978-0-307-58973-2", autor1, 2014));
@@ -49,7 +64,6 @@ public class Main {
         libros.add(new Libro("To Kill a Mockingbird", 13, "978-0-525-43396-9", autor3, 1960));
         
         //inicializar computadores
-        computadores.add(new Computador("Samsung JX", 0, "Samsung", "Alta"));
         computadores.add(new Computador("Samsung JX", 0, "Samsung", "Alta"));
         computadores.add(new Computador("HP Pavilion", 1, "HP", "Media"));
         computadores.add(new Computador("Dell Inspiron", 2, "Dell", "Baja"));
@@ -97,7 +111,7 @@ public class Main {
         bibliotecas.get(0).getPCS().add(new PC(computadores.get(0), true, bibliotecas.get(0)));
         bibliotecas.get(0).getPCS().add(new PC(computadores.get(0), true, bibliotecas.get(0)));
         bibliotecas.get(0).getPCS().add(new PC(computadores.get(4), true, bibliotecas.get(0)));
-        bibliotecas.get(0).getPCS().add(new PC(computadores.get(6), true, bibliotecas.get(0)));
+        bibliotecas.get(0).getPCS().add(new PC(computadores.get(5), true, bibliotecas.get(0)));
         bibliotecas.get(0).getPCS().add(new PC(computadores.get(1), true, bibliotecas.get(0)));
         bibliotecas.get(0).getPCS().add(new PC(computadores.get(2), true, bibliotecas.get(0)));
         bibliotecas.get(0).getPCS().add(new PC(computadores.get(1), true, bibliotecas.get(0)));
@@ -167,7 +181,7 @@ public class Main {
 				pedirComputadorOLibro();
 				break;
 			case 2:
-				AgregarComputadorOLibro();
+				AgregarOEliminar();
 				break;
 			case 3:
 				recursoEvento();
@@ -235,27 +249,140 @@ public class Main {
 				
 			}
 			
-	private static void AgregarComputadorOLibro() {
+	private static void AgregarOEliminar() {
+		String nombre;
+		Biblioteca sede;
 		Byte op;
-		System.out.println("Selecciona la sede a la cual deseas modificar la base de datos");
-		for (Biblioteca b : bibliotecas) {
-			System.out.println(bibliotecas.indexOf(b) + ". " + b.getNombre());
-		}
-		Biblioteca sedeACambiar = bibliotecas.get(sc.nextByte());
+		Autor autor;
 		System.out.println("Seleccione la acción que desee realizar: \n0. Agregar libro\n1. Remover libro\n2. Agregar computador\n3. Remover computador");
 		op = sc.nextByte();
 		switch(op) {
 		case 0:
+			System.out.println("Para evitar temas de duplicados, por favor ingresa el codigo ISBN del libro que deseas agragar para comprobar que aun no se encuentra en nuestro sistema: ");
+			sc.nextLine();
+			String isbn = sc.nextLine();
+			for (Libro l : libros) {
+				if (l.getIsbn().equalsIgnoreCase(isbn)) {
+					System.out.println("El libro ya se encuentra en la base de datos de la biblioteca");
+					return;
+				}
+			}
+			System.out.println("El libro no se encuentra en la base de datos de la biblioteca");
+			System.out.println("Ingrese el nombre del libro a registrar: ");
+			sc.nextLine();
+			nombre = sc.nextLine();
+			System.out.println("Ingrese el año de publicacion: ");
+			int año = sc.nextInt();
+			System.out.println("Seleccione el autor del libro: ");
+			for (int i = 0; i < autores.size(); i++) {
+				System.out.println((i+1) + ". " + autores.get(i));
+			}
+			System.out.println("\n0. Crear autor");
+			op = sc.nextByte();
 			
-		case 1:
-		ArrayList<Copia> copias = sedeACambiar.getCopias();
-		
+			if (op == 0) {
+				System.out.println("Ingrese el nombre del autor: ");
+				sc.nextLine();
+				String nombreAutor = sc.nextLine();
+				System.out.println("Ingrese la nacionalidad del autor: ");
+				sc.nextLine();
+				String nacionalidad = sc.nextLine();
+				System.out.println("Ingrese la corriente del autor: ");
+				sc.nextLine();
+				String corriente = sc.nextLine();
+				
+				autor = new Autor(nombreAutor, nacionalidad, corriente);
+				
+			}
+			else {
+				autor = autores.get(op);
+			}
+			
+			Libro libroNuevo = new Libro(nombre, libros.size(), isbn, autor, año);
+			libros.add(libroNuevo);
+			System.out.println("¿A que sede deseas agregar las copias del libro?");
+			for (Biblioteca b : bibliotecas) {
+				System.out.println(bibliotecas.indexOf(b) + ". " + b.getNombre());
+			}
+			sede = bibliotecas.get(sc.nextInt());
+			System.out.println("Cuantas copias de este libro deseas agregar");
+			int num = sc.nextInt();
+			for (int i = 0; i <= num; i++) {
+				sede.añadirCopia(new Copia(sede.getCopias().size(), libroNuevo, sede));
+			}
+			System.out.println("¡Copias añadidas con exito!");
 
+			break;
+		case 1:
+			System.out.println("Seleccione el libro que desea eliminar: ");
+			for (Libro l : libros) {
+				System.out.println(libros.indexOf(l) + ". " + l.getNombre());
+			}
+			Libro aEliminar = libros.get(sc.nextInt());
+			for(Biblioteca s : bibliotecas) {
+				for(Copia copia : s.getCopias()) {
+					if (copia.getNombre().equalsIgnoreCase(aEliminar.getNombre()) && s.getCopias().contains(aEliminar)) {
+						s.getCopias().remove(copia);
+					}
+					
+				}
+			}
+			libros.remove(aEliminar);
+			break;
 		case 2:
+			System.out.println("Para evitar añadir un modelo duplicado, por favor ingrese el nombre del computador: ");
+			sc.nextLine();
+			nombre = sc.nextLine();
+			for (Computador c : computadores) {
+				if (c.getNombre().equalsIgnoreCase(nombre)) {
+					System.out.println("La biblioteca ya cuenta con este computador");
+					return;
+				}
+			}
+			System.out.println("Ingrese la marca del computador a registrar: ");
+			sc.nextLine();
+			String marca = sc.nextLine();
+			System.out.println("Ingrese la gama del computador a registrar: ");
+			sc.nextLine();
+			String gama = sc.nextLine();
+			System.out.println("Seleccione el autor del libro: ");
+			
+			
+			Computador computadorNuevo = new Computador(nombre, computadores.size(), marca, gama);
+			computadores.add(computadorNuevo);
+			System.out.println("¿A que sede deseas agregar los PCs de este modelo?");
+			for (Biblioteca b : bibliotecas) {
+				System.out.println(bibliotecas.indexOf(b) + ". " + b.getNombre());
+			}
+			sede = bibliotecas.get(sc.nextInt());
+			System.out.println("Cuantas copias de este libro deseas agregar");
+			int num1 = sc.nextInt();
+			for (int i = 0; i <= num1; i++) {
+				sede.añadirPC(new PC(computadorNuevo, true, sede));
+			}
+			System.out.println("¡PCs añadidos con exito!");
+
+			break;
 			
 		case 3:
+			System.out.println("Seleccione la referencia del computador que desea eliminar: ");
+			for (Computador c : computadores) {
+				System.out.println(computadores.indexOf(c) + ". " + c.getNombre());
+			}
+			Computador aEliminar1 = computadores.get(sc.nextInt());
+			for(Biblioteca s : bibliotecas) {
+				for(PC pc : s.getPCS()) {
+					if (pc.getNombre().equalsIgnoreCase(aEliminar1.getNombre()) && s.getPCS().contains(aEliminar1)) {
+						s.getPCS().remove(pc);
+					}
+					
+				}
+			}
+			computadores.remove(aEliminar1);
+			break;
 			
 		default :
+			System.out.println("Opcion incorrecta");
 			
 		}
 		
