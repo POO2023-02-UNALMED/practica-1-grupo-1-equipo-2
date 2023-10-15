@@ -1,6 +1,6 @@
 package gestorAplicacion.paquete1;
 
-public class Copia {
+public class Copia extends Libro {
     private int idCopia; // Identificador único de la copia
     private Libro copiaDe; // El libro del que es una copia
     private boolean disponibleEvento; // Indica si la copia está disponible para eventos
@@ -8,14 +8,16 @@ public class Copia {
     private Biblioteca ubicacion; // La sede a la que está asignada esta copia
 
     // Constructor de la clase Copia
-    public Copia(int idCopia, Libro copiaDe, Biblioteca ubicacion) {
+    public Copia(int idCopia, Libro libro, Biblioteca ubicacion) {
+    	super(libro.getNombre(),1,libro.getIsbn(), libro.getAutor(),libro.getAño());
         this.idCopia = idCopia;
         this.copiaDe = copiaDe;
         this.disponibleEvento = true; // Por defecto, disponible para eventos
         this.disponibleParticular = true; // Por defecto, disponible para préstamos particulares
         this.ubicacion = ubicacion;
+   	
     }
-
+    
     // Método para obtener el identificador único de la copia
     public int getIdCopia() {
         return idCopia;

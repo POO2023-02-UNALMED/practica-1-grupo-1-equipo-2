@@ -1,13 +1,13 @@
 package gestorAplicacion.paquete1;
 import gestorAplicacion.paquete2.*;
 import java.util.*;
-
 import java.util.ArrayList;
 
 public class Biblioteca {
     // Atributos de la clase Biblioteca
     private String nombre;
     private String sede;
+    private ArrayList<Sala> salas;
     private ArrayList<Libro> libros;
     private ArrayList<Copia> copias;
     private ArrayList<Computador> computadores;
@@ -18,9 +18,12 @@ public class Biblioteca {
     public Biblioteca(String nombre, String sede) {
         this.nombre = nombre;
         this.sede = sede;
+        this.salas = new ArrayList<>();
         this.libros = new ArrayList<>();
         this.computadores = new ArrayList<>();
         this.prestamos = new ArrayList<>();
+        this.copias = new ArrayList<>();
+        this.pcs = new ArrayList<PC>();
     }
 
     // Métodos para obtener y establecer el nombre de la biblioteca
@@ -85,6 +88,14 @@ public class Biblioteca {
     public void setPrestamos(ArrayList<Prestamo> prestamos) {
         this.prestamos = prestamos;
     }
+    
+    public void añadirSala(Sala sala) {
+    	salas.add(sala);
+    }
+    
+    public ArrayList<Sala> getSalas() {
+		return salas;
+	}
 
     // Método para verificar si hay una copia disponible para un propósito específico
     public boolean hayCopia(String nombreLibro, String proposito) {
@@ -105,17 +116,32 @@ public class Biblioteca {
 
 	
 	// Método para encontrar el estado de una copia por su ID
-	public String encontrar(int idCopia) {
-        for (Prestamo prestamo : prestamos) {
+	//public String encontrar(int idCopia) {
+        //for (Prestamo prestamo : prestamos) {
             // Verificar si la copia está en préstamo
-            for (Copia copia : prestamo.getCopiasPrestadas()) {
-                if (copia.getIdCopia() == idCopia) {
-                    return "A préstamo";
-                }
-            }
-        }
+            //for (Copia copia : prestamo.getCopiasPrestadas()) {
+                //if (copia.getIdCopia() == idCopia) {
+                    //return "A préstamo";
+                //}
+            //}
+       //}
 
         // Si no se encontró en los préstamos, se asume que está en la biblioteca
-        return "En biblioteca";
-    }
+        //return "En biblioteca";
+    //}
+	
+	public Copia hallarPorNombre(String nombre) {
+		for (Copia c : copias) {
+			if (c.getNombre().equalsIgnoreCase(nombre)) {
+				return c;
+			}
+
+			}
+
+		return null;
+		}
+	
+	public void removerCopia(Copia copia) {
+		copias.remove(copia);
+	}
 }

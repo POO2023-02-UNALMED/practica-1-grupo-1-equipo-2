@@ -10,11 +10,12 @@ public class Main {
 	static BaseDatos baseDeDatos = new BaseDatos();
 	static ArrayList<Libro> libros = new ArrayList<Libro>();	
 	static ArrayList<Biblioteca> bibliotecas = new ArrayList<Biblioteca>();
+	static ArrayList<Computador> computadores = new ArrayList<Computador>();
 	static Usuario user = new Usuario("Usuario Prueba", "prueba@gmail.com", 1111, 0000);
 	
 	// Método para inicializar libros
     static void inicializarLibros() {
-    	// Inicializac autores
+    	// Inicializar autores
         Autor autor1 = new Autor("Yuval Noah Harari", "Israel", "Historia");
         Autor autor2 = new Autor("J.K. Rowling", "Reino Unido", "Fantasía");
         Autor autor3 = new Autor("Harper Lee", "Estados Unidos", "Ficción");
@@ -46,15 +47,33 @@ public class Main {
         libros.add(new Libro("Sapiens: De animales a dioses", 11, "978-0-014-303995-9", autor10, 2011));
         libros.add(new Libro("El amor en los tiempos del cólera", 12, "978-84-204-5298-7", autor11, 1985));
         libros.add(new Libro("To Kill a Mockingbird", 13, "978-0-525-43396-9", autor3, 1960));
+        
+        //inicializar computadores
+        computadores.add(new Computador("Samsung JX", 0, "Samsung", "Alta"));
+        computadores.add(new Computador("Samsung JX", 0, "Samsung", "Alta"));
+        computadores.add(new Computador("HP Pavilion", 1, "HP", "Media"));
+        computadores.add(new Computador("Dell Inspiron", 2, "Dell", "Baja"));
+        computadores.add(new Computador("Lenovo ThinkPad", 3, "Lenovo", "Alta"));
+        computadores.add(new Computador("Asus VivoBook", 4, "Asus", "Media"));
+        computadores.add(new Computador("Acer Aspire", 5, "Acer", "Baja"));
+
     }
 
-    // Método para inicializar bibliotecas y copias
+    // Método para inicializar bibliotecas, salas, PCs y copias
     static void inicializarBibliotecas() {
     	// Inicializar bibliotecas
         bibliotecas.add(new Biblioteca("Efe Gomez", "Medellin"));
         bibliotecas.add(new Biblioteca("Gabriel Garcia Marquez", "Bogota"));
         
+        //Inicializar salas en seme Medellin
+        bibliotecas.get(0).añadirSala(new Sala(bibliotecas.get(0), "Auditorio 1", 25));
+        bibliotecas.get(0).añadirSala(new Sala(bibliotecas.get(0), "Auditorio 2", 10));
+        bibliotecas.get(1).añadirSala(new Sala(bibliotecas.get(1), "Auditorio 1", 10));
+        bibliotecas.get(1).añadirSala(new Sala(bibliotecas.get(1), "Auditorio 2", 30));
+
         // Inicializar copias y asignarlas a bibliotecas
+        
+        //Añadir copias a sede Medellin
         bibliotecas.get(0).getCopias().add(new Copia(0,libros.get(0), bibliotecas.get(0)));
         bibliotecas.get(0).getCopias().add(new Copia(1,libros.get(1), bibliotecas.get(0)));
         bibliotecas.get(0).getCopias().add(new Copia(2,libros.get(2), bibliotecas.get(0)));
@@ -64,15 +83,38 @@ public class Main {
         bibliotecas.get(0).getCopias().add(new Copia(6,libros.get(6), bibliotecas.get(0)));
         bibliotecas.get(0).getCopias().add(new Copia(7,libros.get(7), bibliotecas.get(0)));
         bibliotecas.get(0).getCopias().add(new Copia(8,libros.get(8), bibliotecas.get(0)));
-	
-        bibliotecas.get(0).getCopias().add(new Copia(9,libros.get(8), bibliotecas.get(1)));
-        bibliotecas.get(0).getCopias().add(new Copia(10,libros.get(9), bibliotecas.get(1)));
-        bibliotecas.get(0).getCopias().add(new Copia(11,libros.get(10), bibliotecas.get(1)));
-        bibliotecas.get(0).getCopias().add(new Copia(12,libros.get(11), bibliotecas.get(1)));
-        bibliotecas.get(0).getCopias().add(new Copia(13,libros.get(12), bibliotecas.get(1)));
-        bibliotecas.get(0).getCopias().add(new Copia(14,libros.get(13), bibliotecas.get(1)));
-        bibliotecas.get(0).getCopias().add(new Copia(15,libros.get(14), bibliotecas.get(1)));
-        bibliotecas.get(0).getCopias().add(new Copia(16,libros.get(15), bibliotecas.get(1)));
+        //Añadir copias a sede Bogota
+        bibliotecas.get(1).getCopias().add(new Copia(0,libros.get(8), bibliotecas.get(1)));
+        bibliotecas.get(1).getCopias().add(new Copia(1,libros.get(9), bibliotecas.get(1)));
+        bibliotecas.get(1).getCopias().add(new Copia(2,libros.get(10), bibliotecas.get(1)));
+        bibliotecas.get(1).getCopias().add(new Copia(3,libros.get(11), bibliotecas.get(1)));
+        bibliotecas.get(1).getCopias().add(new Copia(4,libros.get(12), bibliotecas.get(1)));
+        bibliotecas.get(1).getCopias().add(new Copia(5,libros.get(13), bibliotecas.get(1)));
+        bibliotecas.get(1).getCopias().add(new Copia(6,libros.get(14), bibliotecas.get(1)));
+        bibliotecas.get(1).getCopias().add(new Copia(7,libros.get(15), bibliotecas.get(1)));
+        
+        //Añadir PCs a sede Medellin
+        bibliotecas.get(0).getPCS().add(new PC(computadores.get(0), true, bibliotecas.get(0)));
+        bibliotecas.get(0).getPCS().add(new PC(computadores.get(0), true, bibliotecas.get(0)));
+        bibliotecas.get(0).getPCS().add(new PC(computadores.get(4), true, bibliotecas.get(0)));
+        bibliotecas.get(0).getPCS().add(new PC(computadores.get(6), true, bibliotecas.get(0)));
+        bibliotecas.get(0).getPCS().add(new PC(computadores.get(1), true, bibliotecas.get(0)));
+        bibliotecas.get(0).getPCS().add(new PC(computadores.get(2), true, bibliotecas.get(0)));
+        bibliotecas.get(0).getPCS().add(new PC(computadores.get(1), true, bibliotecas.get(0)));
+        bibliotecas.get(0).getPCS().add(new PC(computadores.get(2), true, bibliotecas.get(0)));
+
+        
+        //Añadir PCs a sede Bogota
+        bibliotecas.get(1).getPCS().add(new PC(computadores.get(5), true, bibliotecas.get(1)));
+        bibliotecas.get(1).getPCS().add(new PC(computadores.get(3), true, bibliotecas.get(1)));
+        bibliotecas.get(1).getPCS().add(new PC(computadores.get(0), true, bibliotecas.get(1)));
+        bibliotecas.get(1).getPCS().add(new PC(computadores.get(2), true, bibliotecas.get(1)));
+        bibliotecas.get(1).getPCS().add(new PC(computadores.get(4), true, bibliotecas.get(1)));
+        bibliotecas.get(1).getPCS().add(new PC(computadores.get(3), true, bibliotecas.get(1)));
+        bibliotecas.get(1).getPCS().add(new PC(computadores.get(5), true, bibliotecas.get(1)));
+        bibliotecas.get(1).getPCS().add(new PC(computadores.get(0), true, bibliotecas.get(1)));
+
+        
     }
     
 	public static void main(String[] args) {
@@ -112,22 +154,23 @@ public class Main {
 		do {
 			System.out.println("Sesion iniciada correctamente \nPor favor seleccione la opcion que desee");
 			System.out.println("----------------------------------------------------------");
-			System.out.println("1. Consulta de disponibilidad y prestamo de libro");
-			System.out.println("2. Consulta de disponibilidad y prestamo de computador");
-			System.out.println("3. Consulta y pago de multas");
-			System.out.println("4. Agregar o eliminar libro a la coleccion");
-			System.out.println("5. Administrar perfil");
+			System.out.println("1. Consulta de disponibilidad de libro o computador");
+			System.out.println("2. Agregar libro o computador a la base de datos");
+			System.out.println("3. Consulta de disponibilidad y reserva de recursos para eventos");
+			System.out.println("4. Regresar computadores y/o libros en préstamo");
+			System.out.println("5. Gestión de Multas");
 			System.out.println("----------------------------------------------------------");
 			op = sc.nextByte();
 			
 			switch(op) {
 			case 1:
-				pedirLibro();
-				user.obtenerPrestamosVigentesConDetalles();
+				pedirComputadorOLibro();
 				break;
 			case 2:
+				AgregarComputadorOLibro();
 				break;
 			case 3:
+				recursoEvento();
 				break;
 			case 4:
 				break;
@@ -143,49 +186,145 @@ public class Main {
 	
 	
 	// ACÁ HAY QUE MODIFICAR LA LÓGICA, PARA HACER LO DE LOS TIPOS DE PRÉSTAMO
-	private static void pedirLibro() {
-		System.out.println("Ingrese el nombre del libro que desees consultar: ");
-		sc.nextLine();
-		String nombre = sc.nextLine();
-		Copia copia = null;
-		int cont = 0;
-		for (Libro l : libros) {
-			if (l.getNombre().equalsIgnoreCase(nombre)) {	
-				System.out.println("Libro encontrado");
-				System.out.println("El libro: " + "'" + l.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
-				ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>();
-				for (Biblioteca b : bibliotecas) { 
-					if (b.hayCopia(nombre)) {
-						System.out.println(bibliotecas.indexOf(b) + ". " + b.getSede());
-						sedes.add(b);
+	private static void pedirComputadorOLibro() {
+		int op1;
+		System.out.println("Ingresa el recurso del cual deseas consultar disponibilidad");
+		System.out.println("0. Libro \n1. Computador");
+		op1 = sc.nextByte();
+		switch (op1) {
+		case 0: 
+			System.out.println("Ingrese el nombre del libro que desees consultar: ");
+			sc.nextLine();
+			String nombre = sc.nextLine();
+			Copia copia = null;
+			int cont = 0;
+			for (Libro l : libros) {
+				if (l.getNombre().equalsIgnoreCase(nombre)) {	
+					System.out.println("Libro encontrado");
+					System.out.println("El libro: " + "'" + l.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
+					ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>();
+					for (Biblioteca b : bibliotecas) { 
+						if (b.hayCopia(nombre, "Particular")) {
+							System.out.println(bibliotecas.indexOf(b) + ". " + b.getSede());
+							sedes.add(b);
+						}
 					}
 				}
-				System.out.println("Seleccione la sede de su preferencia para realizar el prestamo ingresando el nombre: ");
-				byte op = sc.nextByte();
-				copia = bibliotecas.get(op).encontrar(nombre);
-				bibliotecas.get(op).prestamo(copia);
-				System.out.println("Ingrese el dia hasta el cual desea hacer el prestamo: ");
-				int dia = sc.nextInt();
-				System.out.println("Ingrese el mes hasta el cual desea hacer el prestamo: ");
-				int mes = sc.nextInt();
-				Date fecha = new Date(2023,mes,dia);
-				Prestamo prestamo = new Prestamo("Prestamo de libro", user, fecha, copia);
-				user.añadirPrestamo(prestamo);
-				System.out.println("¡El prestamo se ha realizado con exito!");
-				System.out.println("Por favor regresa tu libro ;)");
-
+			}
+			System.out.println("Seleccione la sede de su preferencia para realizar el prestamo ingresando el nombre: ");
+			byte op = sc.nextByte();
+			copia = bibliotecas.get(op).hallarPorNombre(nombre);
+			bibliotecas.get(op).removerCopia(copia);
+			System.out.println("Ingrese el dia hasta el cual desea hacer el prestamo: ");
+			int dia = sc.nextInt();
+			System.out.println("Ingrese el mes hasta el cual desea hacer el prestamo: ");
+			int mes = sc.nextInt();
+			//Date fecha = new Date(2023,mes,dia);
+			//Prestamo prestamo = new Prestamo(user,"Prestamo de libro", fecha, fecha, copia);
+			//user.añadirPrestamo(prestamo);
+			//System.out.println("¡El prestamo se ha realizado con exito!");
+			//System.out.println("Por favor regresa tu libro ;)");
 				
-				
-				
-
+				case 1: 
 					
-				}
+				default:
+					System.out.println("Ingrese una opción correcta");
+		}
+					
+		
 				
 			}
 			
+	private static void AgregarComputadorOLibro() {
+		Byte op;
+		System.out.println("Selecciona la sede a la cual deseas modificar la base de datos");
+		for (Biblioteca b : bibliotecas) {
+			System.out.println(bibliotecas.indexOf(b) + ". " + b.getNombre());
+		}
+		Biblioteca sedeACambiar = bibliotecas.get(sc.nextByte());
+		System.out.println("Seleccione la acción que desee realizar: \n0. Agregar libro\n1. Remover libro\n2. Agregar computador\n3. Remover computador");
+		op = sc.nextByte();
+		switch(op) {
+		case 0:
+			
+		case 1:
+		ArrayList<Copia> copias = sedeACambiar.getCopias();
+		
 
+		case 2:
+			
+		case 3:
+			
+		default :
 			
 		}
+		
+	}
+	
+	private static void recursoEvento() {
+		Byte op;
+		Byte op2 = 0;
+		Date finicio;
+		Date ffinal;
+		Prestamo prestamo;
+		System.out.println("Seleccione la sede en la cual se requiere hacer la reserva para evento: ");
+		for (Biblioteca b : bibliotecas) {
+			System.out.println(bibliotecas.indexOf(b) + ". " + b.getNombre());
+		}
+		Biblioteca sede = bibliotecas.get(sc.nextByte());
+		System.out.println("Seleccione que tipo de evento desea reservar: ");
+		System.out.println("0. Charla\n1. Presentacion\n2. Estudio");
+		op = sc.nextByte();
+		System.out.println("Seleccione la sala que desea reservar: ");
+		for (int i = 0; i < sede.getSalas().size(); i++) {
+			System.out.println(i + ". " + sede.getSalas().get(i).getNombre() + " / Con capacidad para: " + sede.getSalas().get(i).getCapacidad() + " personas" );
+		}
+		
+		op2 = sc.nextByte();
+		Evento evento = new Evento(op, sede, sede.getSalas().get(op2)); 
+		System.out.println("¿Que recursos deseas reservar para el evento?");
+		System.out.println("0. Libros\n1. Computadores");
+		switch(sc.nextByte()) {
+		
+		case 0:
+			System.out.println("Lista de libros disponibles para reserva de evento: ");
+			for (int i = 0; i < sede.getCopias().size(); i++) {
+				System.out.println(i + ". " + sede.getCopias().get(i).getNombre());
+			}
+			System.out.println("Por favor seleccione el libro a reservar para evento: ");
+			op2 = sc.nextByte();
+			finicio = new Date();
+			ffinal = new Date(2023,12,12);
+			prestamo = new Prestamo(user,"Evento",evento.getSala(),finicio,ffinal,sede.getCopias().get(op2), sede);
+			sede.getPrestamos().add(prestamo);
+			System.out.println("Reserva realizada con exito en sala: " + prestamo.getSala() + " con el siguiente material: ");
+			prestamo.getCopiasPrestadas();
+			
+		case 1:
+			System.out.println("Lista de computadores disponibles para evento: ");
+			for (int i = 0; i < sede.getPCS().size(); i++) {
+				System.out.println(i + ". " + sede.getPCS().get(i).getNombre());
+			}
+			System.out.println("Por favor seleccione el computador a reservar para evento: ");
+			op2 = sc.nextByte();
+			finicio = new Date();
+			ffinal = new Date(2023,12,12);
+			prestamo = new Prestamo(user,"Evento",evento.getSala(),finicio,ffinal,sede.getPCS().get(op2), sede);
+			sede.getPrestamos().add(prestamo);
+			System.out.println("Reserva realizada con exito en sala: " + prestamo.getSala() + " con el siguiente material: ");
+			prestamo.getPcsPrestados();
+		default:
+			System.out.println("Material incorrecto");
+		}
+		
+		
+			
+		}
+		
+		
+		
+		
+
 		
 	
 	private static boolean iniciarSesion() {
