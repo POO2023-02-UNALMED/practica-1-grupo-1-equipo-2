@@ -14,6 +14,7 @@ public class Main {
 	static ArrayList<Autor> autores = new ArrayList<Autor>();
 	static Usuario user = new Usuario("Usuario Prueba", "prueba@gmail.com", 1111, 0000);
 	
+	
 	// Método para inicializar libros
     static void inicializarLibros() {
     	// Inicializar autores
@@ -73,6 +74,7 @@ public class Main {
 
     }
 
+    
     // Método para inicializar bibliotecas, salas, PCs y copias
     static void inicializarBibliotecas() {
     	// Inicializar bibliotecas
@@ -130,6 +132,7 @@ public class Main {
 
         
     }
+    
     
 	public static void main(String[] args) {
 		inicializarLibros();
@@ -198,7 +201,6 @@ public class Main {
 	}
 	
 	
-	
 	// ACÁ HAY QUE MODIFICAR LA LÓGICA, PARA HACER LO DE LOS TIPOS DE PRÉSTAMO
 	private static void pedirComputadorOLibro() {
 		int op1;
@@ -211,7 +213,6 @@ public class Main {
 			sc.nextLine();
 			String nombre = sc.nextLine();
 			Copia copia = null;
-			int cont = 0;
 			for (Libro l : libros) {
 				if (l.getNombre().equalsIgnoreCase(nombre)) {	
 					System.out.println("Libro encontrado");
@@ -225,10 +226,10 @@ public class Main {
 					}
 				}
 			}
-			System.out.println("Seleccione la sede de su preferencia para realizar el prestamo ingresando el nombre: ");
+			System.out.println("Seleccione la sede de su preferencia para realizar el prestamo: ");
 			byte op = sc.nextByte();
-			copia = bibliotecas.get(op).hallarPorNombre(nombre);
-			bibliotecas.get(op).removerCopia(copia);
+			copia = bibliotecas.get(op).hallarcopiaPorNombre(nombre);
+			bibliotecas.get(op).remover(copia);
 			System.out.println("Ingrese el dia hasta el cual desea hacer el prestamo: ");
 			int dia = sc.nextInt();
 			System.out.println("Ingrese el mes hasta el cual desea hacer el prestamo: ");
@@ -239,7 +240,31 @@ public class Main {
 			//System.out.println("¡El prestamo se ha realizado con exito!");
 			//System.out.println("Por favor regresa tu libro ;)");
 				
-				case 1: 
+			case 1: 
+			System.out.println("Ingrese el modelo del computador que desea consultar: ");
+			sc.nextLine();
+			String modelo = sc.nextLine();
+			PC pc = null;
+			for (Computador c : computadores) {
+				if (c.getNombre().equalsIgnoreCase(modelo)) {    
+			          System.out.println("Computador encontrado");
+			          System.out.println("El computador: " + "'" + c.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
+			          ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>();
+				            for (Biblioteca b : bibliotecas) { 
+				                if (b.hallarpcPorNombre(modelo) instanceof PC) {
+				                    System.out.println(bibliotecas.indexOf(b) + ". " + b.getSede());
+				                    sedes.add(b);
+				                }
+				            }
+				        }
+				    }
+			System.out.println("Seleccione la sede de su preferencia para realizar el prestamo: ");
+			byte op2 = sc.nextByte();
+			pc = bibliotecas.get(op2).hallarpcPorNombre(modelo);
+			bibliotecas.get(op2).remover(pc);
+			System.out.println("¡El prestamo se ha realizado con exito!");
+			System.out.println("Por favor regresa tu computador ;)");
+			break;
 					
 				default:
 					System.out.println("Ingrese una opción correcta");
@@ -249,6 +274,7 @@ public class Main {
 				
 			}
 			
+	
 	private static void AgregarOEliminar() {
 		String nombre;
 		Biblioteca sede;
@@ -388,6 +414,7 @@ public class Main {
 		
 	}
 	
+	
 	private static void recursoEvento() {
 		Byte op;
 		Byte op2 = 0;
@@ -448,10 +475,11 @@ public class Main {
 			
 		}
 		
-		
-		
-		
-
+	
+	private static void regresarPrestamo() {}
+	
+	
+	private static void gestionMultas() {}
 		
 	
 	private static boolean iniciarSesion() {

@@ -135,7 +135,7 @@ public class Biblioteca {
         //return "En biblioteca";
     //}
 	
-	public Copia hallarPorNombre(String nombre) {
+	public Copia hallarcopiaPorNombre(String nombre) {
 		for (Copia c : copias) {
 			if (c.getNombre().equalsIgnoreCase(nombre)) {
 				return c;
@@ -145,8 +145,22 @@ public class Biblioteca {
 
 		return null;
 		}
+	public PC hallarpcPorNombre(String nombre) {
+		for (PC p : pcs) {
+			if (p.getNombre().equalsIgnoreCase(nombre)) {
+				return p;
+			}
+			
+		}
+		return null;
+	}
 	
-	public void removerCopia(Copia copia) {
+	
+	public void remover(Copia copia) {
 		copias.remove(copia);
+	}
+	
+	public void remover(PC pc) {
+		pcs.remove(pc);
 	}
 }
