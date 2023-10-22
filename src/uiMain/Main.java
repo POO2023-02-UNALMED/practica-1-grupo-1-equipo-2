@@ -8,6 +8,10 @@ import baseDatos.Serializador;
 
 import java.util.*;
 
+/**
+ * Clase Main encargada de la capa asociada a la interfaz del usuario y de implementar
+ * las funcionalidades del proyecto.
+ */
 
 public class Main {
 	static Scanner sc = new Scanner(System.in);
@@ -76,19 +80,24 @@ public class Main {
 		while (op != 5);
 	}
 	
-	
+	/**
+	 * Primera funcionalidad, encargada de buscar libros o computadores en una sede de la biblioteca
+	 * y realizar un prestamo a nombre del usuario
+	 */
 	private static void pedirComputadorOLibro() {
 		int op1;
 		System.out.println("Ingresa el recurso del cual deseas consultar disponibilidad");
 		System.out.println("0. Libro \n1. Computador");
 		op1 = sc.nextByte();
 		switch (op1) {
+		//caso libro
 		case 0: 
 			System.out.println("Ingrese el nombre del libro que desees consultar: ");
 			sc.nextLine();
 			String nombre = sc.nextLine();
 			Copia copia = null;
-			for (Libro l : sistema.getLibros()) {
+			//Busca en la base de datos de libros si existe un libro con ese nombre, no importa la sede
+			for (Libro l : sistema.getLibros()) { 
 				if (l.getNombre().equalsIgnoreCase(nombre)) {	
 					System.out.println("Libro encontrado");
 					System.out.println("El libro: " + "'" + l.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
@@ -101,6 +110,7 @@ public class Main {
 					}
 				}
 			}
+			//Si comprueba que existe ese libro, muestra las sedes que tengan al menos una copia del mismo
 			System.out.println("Seleccione la sede de su preferencia para realizar el prestamo: ");
 			byte op = sc.nextByte();
 			copia = sistema.getBibliotecas().get(op).hallarcopiaPorNombre(nombre);
@@ -110,17 +120,21 @@ public class Main {
 			System.out.println("Ingrese el mes hasta el cual desea hacer el prestamo: ");
 			int mes = sc.nextInt();
 			
+			// Remueve la copia de la base de datos de la sede y realiza el prestamo a nombre del usuario
+			
 			//Date fecha = new Date(2023,mes,dia);
 			//Prestamo prestamo = new Prestamo(user,"Prestamo de libro", fecha, fecha, copia);
 			//user.añadirPrestamo(prestamo);
 			//System.out.println("¡El prestamo se ha realizado con exito!");
 			//System.out.println("Por favor regresa tu libro ;)");
 				
+			//caso computador
 			case 1: 
 			System.out.println("Ingrese el modelo del computador que desea consultar: ");
 			sc.nextLine();
 			String modelo = sc.nextLine();
 			PC pc = null;
+			//Busca en la base de datos de computadores si existe un computador con ese nombre, no importa la sede
 			for (Computador c : sistema.getComputadores()) {
 				if (c.getNombre().equalsIgnoreCase(modelo)) {    
 			          System.out.println("Computador encontrado");
@@ -134,6 +148,7 @@ public class Main {
 				            }
 				        }
 				    }
+			//Una vez comprobado que existe, muestra las sedes donde hay un pc de ese modelo
 			System.out.println("Seleccione la sede de su preferencia para realizar el prestamo: ");
 			byte op2 = sc.nextByte();
 			pc = sistema.getBibliotecas().get(op2).hallarpcPorNombre(modelo);
@@ -150,7 +165,10 @@ public class Main {
 				
 			}
 			
-	
+	/**
+	 * Metodo encargado de agregar o eliminar recursos de la base de datos general y posteriormente
+	 * modificar las copiasd de cada sede
+	 */
 	private static void AgregarOEliminar() {
 		String nombre;
 		Biblioteca sede;
@@ -159,16 +177,20 @@ public class Main {
 		System.out.println("Seleccione la acción que desee realizar: \n0. Agregar libro\n1. Remover libro\n2. Agregar computador\n3. Remover computador");
 		op = sc.nextByte();
 		switch(op) {
+		//caso agregar libro
 		case 0:
 			System.out.println("Para evitar temas de duplicados, por favor ingresa el codigo ISBN del libro que deseas agragar para comprobar que aun no se encuentra en nuestro sistema: ");
 			sc.nextLine();
 			String isbn = sc.nextLine();
+			//verifica si el libro a agregar ya existe en la base de datos, buscando por codigo isbn
 			for (Libro l : sistema.getLibros()) {
 				if (l.getIsbn().equalsIgnoreCase(isbn)) {
 					System.out.println("El libro ya se encuentra en la base de datos de la biblioteca");
 					return;
 				}
 			}
+			
+			//si el libro no se encuentra, procede a pedir los datos para el registro
 			System.out.println("El libro no se encuentra en la base de datos de la biblioteca");
 			System.out.println("Ingrese el nombre del libro a registrar: ");
 			sc.nextLine();
@@ -199,7 +221,7 @@ public class Main {
 			else {
 				autor = sistema.getAutores().get(op);
 			}
-			
+			//Crea el nuevo libro con la informacion solicitada y agrega las copias
 			Libro libroNuevo = new Libro(nombre, sistema.getLibros().size(), isbn, autor, año);
 			sistema.getLibros().add(libroNuevo);
 			System.out.println("¿A que sede deseas agregar las copias del libro?");
@@ -215,11 +237,14 @@ public class Main {
 			System.out.println("¡Copias añadidas con exito!");
 
 			break;
+		// Caso eliminar libro
 		case 1:
+			// Despliega lista de libros actuales para consultar cual se desea eliminar
 			System.out.println("Seleccione el libro que desea eliminar: ");
 			for (Libro l : sistema.getLibros()) {
 				System.out.println(sistema.getLibros().indexOf(l) + ". " + l.getNombre());
 			}
+			// Elimina el libro solicitado de toda base de datos
 			Libro aEliminar = sistema.getLibros().get(sc.nextInt());
 			for(Biblioteca s : sistema.getBibliotecas()) {
 				for(Copia copia : s.getCopias()) {
@@ -231,16 +256,19 @@ public class Main {
 			}
 			sistema.getLibros().remove(aEliminar);
 			break;
+		// Caso agregar computador
 		case 2:
 			System.out.println("Para evitar añadir un modelo duplicado, por favor ingrese el nombre del computador: ");
 			sc.nextLine();
 			nombre = sc.nextLine();
+			//verifica si el computador a agregar ya existe en la base de datos, buscando por modelo
 			for (Computador c : sistema.getComputadores()) {
 				if (c.getNombre().equalsIgnoreCase(nombre)) {
 					System.out.println("La biblioteca ya cuenta con este computador");
 					return;
 				}
 			}
+			// Si no existe, procede a solicitar informacion del nuevo computador
 			System.out.println("Ingrese la marca del computador a registrar: ");
 			sc.nextLine();
 			String marca = sc.nextLine();
@@ -249,7 +277,7 @@ public class Main {
 			String gama = sc.nextLine();
 			System.out.println("Seleccione el autor del libro: ");
 			
-			
+			// Crea la nueva instancia del computador y agrega los pcs a cada sede
 			Computador computadorNuevo = new Computador(nombre, sistema.getComputadores().size(), marca, gama);
 			sistema.getComputadores().add(computadorNuevo);
 			System.out.println("¿A que sede deseas agregar los PCs de este modelo?");
@@ -265,12 +293,14 @@ public class Main {
 			System.out.println("¡PCs añadidos con exito!");
 
 			break;
-			
+		// Caso eliminar pc
 		case 3:
+			// Despliega lista de computadores para consultar cual se desea eliminar
 			System.out.println("Seleccione la referencia del computador que desea eliminar: ");
 			for (Computador c : sistema.getComputadores()) {
 				System.out.println(sistema.getComputadores().indexOf(c) + ". " + c.getNombre());
 			}
+			// Elimina computador de toda base de datos
 			Computador aEliminar1 = sistema.getComputadores().get(sc.nextInt());
 			for(Biblioteca s : sistema.getBibliotecas()) {
 				for(PC pc : s.getPCS()) {
@@ -290,18 +320,23 @@ public class Main {
 		
 	}
 	
-	
+	/**
+	 * Funcionalidad encargada de realizar reservas para un evento, reservando sala y prestando recursos para
+	 * su realizacion
+	 */
 	private static void recursoEvento() {
 		Byte op;
 		Byte op2 = 0;
 		Date finicio;
 		Date ffinal;
 		Prestamo prestamo;
+		// Despliega lista de sedes para ver en cual se desea realizar el evento
 		System.out.println("Seleccione la sede en la cual se requiere hacer la reserva para evento: ");
 		for (Biblioteca b : sistema.getBibliotecas()) {
 			System.out.println(sistema.getBibliotecas().indexOf(b) + ". " + b.getNombre());
 		}
 		Biblioteca sede = sistema.getBibliotecas().get(sc.nextByte());
+		// Consulta de tipo de evento y seleccion de sala disponible para su realizacion
 		System.out.println("Seleccione que tipo de evento desea reservar: ");
 		System.out.println("0. Charla\n1. Presentacion\n2. Estudio");
 		op = sc.nextByte();
@@ -309,18 +344,20 @@ public class Main {
 		for (int i = 0; i < sede.getSalas().size(); i++) {
 			System.out.println(i + ". " + sede.getSalas().get(i).getNombre() + " / Con capacidad para: " + sede.getSalas().get(i).getCapacidad() + " personas" );
 		}
-		
+		// Consulta de material necesitado para la realizacion del evento
 		op2 = sc.nextByte();
 		Evento evento = new Evento(op, sede, sede.getSalas().get(op2)); 
 		System.out.println("¿Que recursos deseas reservar para el evento?");
 		System.out.println("0. Libros\n1. Computadores");
 		switch(sc.nextByte()) {
-		
+		// Caso libro
 		case 0:
+			// Despliega lista de copias disponibles en esa sede para el evento
 			System.out.println("Lista de libros disponibles para reserva de evento: ");
 			for (int i = 0; i < sede.getCopias().size(); i++) {
 				System.out.println(i + ". " + sede.getCopias().get(i).getNombre());
 			}
+			// Se selecciona el libro y se genera el prestamo a nombre del usuario
 			System.out.println("Por favor seleccione el libro a reservar para evento: ");
 			op2 = sc.nextByte();
 			finicio = new Date();
@@ -329,12 +366,14 @@ public class Main {
 			sede.getPrestamos().add(prestamo);
 			System.out.println("Reserva realizada con exito en sala: " + prestamo.getSala() + " con el siguiente material: ");
 			prestamo.getCopiasPrestadas();
-			
+		// Caso computador
 		case 1:
+			// Despliega lista de pcs disponibles en esa sede para el evento
 			System.out.println("Lista de computadores disponibles para evento: ");
 			for (int i = 0; i < sede.getPCS().size(); i++) {
 				System.out.println(i + ". " + sede.getPCS().get(i).getNombre());
 			}
+			// Se selecciona el computador y se genera el prestamo a nombre del usuario
 			System.out.println("Por favor seleccione el computador a reservar para evento: ");
 			op2 = sc.nextByte();
 			finicio = new Date();
@@ -363,7 +402,9 @@ public class Main {
 			
 	}
 	
-	
+	/** 
+	 * Metodo para cerrar el programa y serializar los objetos
+	 */
 	static void salirDelSistema(Sistema sis) {
 		System.out.println("Saliendo del sistema");
 		Serializador.serializar(sis);
