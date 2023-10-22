@@ -1,6 +1,7 @@
 package gestorAplicacion.paquete1;
+import java.io.Serializable;
 
-public class Copia extends Libro {
+public class Copia extends Libro implements Serializable{
     private int idCopia; // Identificador único de la copia
     private Libro copiaDe; // El libro del que es una copia
     private boolean disponibleEvento; // Indica si la copia está disponible para eventos

@@ -1,8 +1,9 @@
 package gestorAplicacion.paquete1;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Computador extends Recurso {
+public class Computador extends Recurso implements Serializable{
     private String marca;
     private String gama;
     private ArrayList<PC> pcs;

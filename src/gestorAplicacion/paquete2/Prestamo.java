@@ -2,8 +2,10 @@ package gestorAplicacion.paquete2;
 import gestorAplicacion.paquete1.*;
 import java.util.Date;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Prestamo {
+public class Prestamo implements Serializable{
+	private static final long serialVersionUID = 1L;
     private int idPrestamo; // Identificador único del préstamo
     private String tipo; // Tipo de préstamo (por ejemplo, "Evento" o "Particular")
     private Usuario usuario; // Usuario que realiza el préstamo

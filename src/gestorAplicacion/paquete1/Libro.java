@@ -2,8 +2,9 @@ package gestorAplicacion.paquete1;
 import gestorAplicacion.paquete2.Autor;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Libro extends Recurso {
+public class Libro extends Recurso implements Serializable {
     private String isbn;
     private Autor autor;
     private int año;

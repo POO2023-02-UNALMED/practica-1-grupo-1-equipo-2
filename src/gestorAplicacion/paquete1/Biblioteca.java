@@ -2,8 +2,10 @@ package gestorAplicacion.paquete1;
 import gestorAplicacion.paquete2.*;
 import java.util.*;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Biblioteca {
+public class Biblioteca implements Serializable{
+	private static final long serialVersionUID = 1L;
     // Atributos de la clase Biblioteca
     private String nombre;
     private String sede;

@@ -1,8 +1,10 @@
 package gestorAplicacion.paquete2;
 
 import java.util.Date;
+import java.io.Serializable;
 
-public class Multa {
+public class Multa implements Serializable{
+	private static final long serialVersionUID = 1L;
     private int idMulta; // Identificador único de la multa
     private String tipo; // Tipo de la multa (por ejemplo, "Retraso en la devolución")
     private Date fechaImpuesta; // Fecha en la que se impuso la multa
