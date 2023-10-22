@@ -87,19 +87,16 @@ public class Prestamo implements Serializable{
 		return sala;
 	}
 
-    // Método para obtener las copias prestadas en el préstamo
-    public void getCopiasPrestadas() {
-        for (Copia c: copiasPrestadas) {
-        	System.out.println("- " + c.getNombre());
-        }
+ // Método para obtener las copias prestadas en el préstamo
+    public ArrayList<Copia> getCopiasPrestadas() {
+        return copiasPrestadas;
     }
 
     // Método para obtener las computadoras prestadas en el préstamo
-    public void getPcsPrestados() {
-    	for (PC p: pcsPrestados) {
-        	System.out.println("- " + p.getNombre());
-        }
+    public ArrayList<PC> getPcsPrestados() {
+        return pcsPrestados;
     }
+
 
     // Método para verificar si el préstamo contiene ciertos recursos
     public boolean contieneRecursos(ArrayList<Copia> copias, ArrayList<PC> pcs) {

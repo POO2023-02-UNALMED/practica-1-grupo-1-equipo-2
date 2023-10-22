@@ -44,15 +44,11 @@ public class Multa implements Serializable{
     }
 
     // Método para pagar la multa
-    public void pagarMulta() {
-        // Lógica para registrar el pago de la multa
-        // Esto podría incluir la actualización de la base de datos de multas y la eliminación de la multa del registro del usuario
-
-        // Notificar al usuario sobre el pago exitoso de la multa
-        System.out.println("La multa de tipo '" + tipo + "' con ID " + idMulta + " ha sido pagada.");
-
+    public String pagarMulta() {
         // Eliminar la multa del registro del usuario
         usuario.eliminarMulta(this);
+        // Notificar al usuario sobre el pago exitoso de la multa
+        return("La multa de tipo '" + tipo + "' con ID " + idMulta + " ha sido pagada.");
     }
 
 }

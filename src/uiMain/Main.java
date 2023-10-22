@@ -17,6 +17,7 @@ public class Main {
 	static Scanner sc = new Scanner(System.in);
 	static Sistema sistema = new Sistema();
 	static Usuario user = new Usuario("Usuario Prueba", "prueba@gmail.com", 1111, 0000);
+    static int numeroMultas = 0;  // Atributo estático para el número de multas
 	
 	public static void main(String[] args) {
 		byte opcion;
@@ -69,6 +70,7 @@ public class Main {
 			case 4:
 				break;
 			case 5:
+				gestionMultas();				
 				break;
 			case 6: 
 				salirDelSistema(sistema);
@@ -390,12 +392,122 @@ public class Main {
 			
 		}
 		
-	
-	private static void regresarPrestamo() {}
-	
-	
-	private static void gestionMultas() {}
+	// Método para devolver un préstamo específico
+	public void regresarPrestamo() {
+	    // Mostrar los préstamos vigentes para que el usuario elija cuál devolver
+	    ArrayList<String> prestamosDetallados = user.obtenerPrestamosVigentesConDetalles();
+	    if (prestamosDetallados.isEmpty()) {
+	        System.out.println("No tienes préstamos vigentes para devolver.");
+	        return;
+	    }
 
+	    System.out.println("Selecciona el préstamo que deseas devolver:");
+	    for (int i = 0; i < prestamosDetallados.size(); i++) {
+	        System.out.println(i + 1 + ". " + prestamosDetallados.get(i));
+	    }
+
+	    int opcion = sc.nextInt();
+	    sc.nextLine(); // Consumir la nueva línea después del número
+
+	    if (opcion < 1 || opcion > prestamosDetallados.size()) {
+	        System.out.println("Opción no válida. Debes seleccionar un número de préstamo válido.");
+	        return;
+	    }
+
+	    Prestamo prestamoSeleccionado = user.getPrestamos().get(opcion - 1);
+
+	    // Realizar las acciones necesarias para marcar las Copias y PC como disponibles nuevamente
+	    ArrayList<Copia> copiasPrestadas = prestamoSeleccionado.getCopiasPrestadas();
+	    for (Copia copia : copiasPrestadas) {
+	        copia.setDisponibleEvento(true); // Marcar la copia como disponible para eventos
+	        copia.setDisponibleParticular(true); // Marcar la copia como disponible para particulares
+	    }
+
+	    ArrayList<PC> pcsPrestados = prestamoSeleccionado.getPcsPrestados();
+	    for (PC pc : pcsPrestados) {
+	        pc.setDisponibleParticular(true); // Marcar la PC como disponible para particulares
+	        pc.setDisponibleEvento(true); // Marcar la copia como disponible para eventos
+	    }
+
+	    // Eliminar el préstamo seleccionado de la lista de préstamos
+	    user.getPrestamos().remove(prestamoSeleccionado);
+
+	    // Calcular si el préstamo se ha devuelto antes de la fecha de vencimiento
+	    Date fechaActual = new Date();
+	    if (fechaActual.before(prestamoSeleccionado.getFechaFin())) {
+	        // El préstamo se ha devuelto antes de la fecha de vencimiento, no hay multa
+	        System.out.println("¡Préstamo devuelto exitosamente antes de la fecha de vencimiento!");
+	    } else {
+	        // El préstamo se ha devuelto después de la fecha de vencimiento, generar multa
+	        int diasDeRetraso = calcularDiasDeRetraso(fechaActual, prestamoSeleccionado.getFechaFin());
+	        double valorMulta = calcularValorMulta(diasDeRetraso);
+
+	        // Crear una nueva multa y agregarla al usuario
+	        Multa multa = new Multa(numeroMultas,"Retraso en la devolución", new Date(), user);
+	        numeroMultas++;
+	        user.getMultas().add(multa);
+
+	        System.out.println("¡Préstamo devuelto con retraso de " + diasDeRetraso + " días! Se ha generado una multa de $" + valorMulta);
+	    }
+	}
+
+
+	// Método para calcular los días de retraso entre dos fechas
+	private int calcularDiasDeRetraso(Date fechaActual, Date fechaVencimiento) {
+	    long diferencia = fechaActual.getTime() - fechaVencimiento.getTime();
+	    return (int) (diferencia / (1000 * 60 * 60 * 24)); // Milisegundos a días
+	}
+
+	// Método para calcular el valor de la multa basado en los días de retraso
+	private double calcularValorMulta(int diasDeRetraso) {
+	    // Puedes definir tu propia lógica para calcular el valor de la multa
+	    // Por ejemplo, $1 por cada día de retraso
+	    return diasDeRetraso * 1.0;
+	}
+
+	
+	
+	public static void mostrarMultas(Usuario usuario) {
+	    // Obtiene las multas pendientes del usuario
+	    List<Multa> multasPendientes = usuario.getMultas();
+
+	    if (multasPendientes.isEmpty()) {
+	        System.out.println("No tienes multas pendientes.");
+	    } else {
+	        System.out.println("Multas pendientes:");
+	        for (Multa multa : multasPendientes) {
+	            System.out.println("ID: " + multa.getIdMulta() + ", Tipo: " + multa.getTipo() + ", Fecha: " + multa.getFechaImpuesta());
+	        }
+	    }
+	}
+
+	public static void gestionMultas() {
+	    // Muestra las multas pendientes del usuario
+	    mostrarMultas(user);
+
+	    // Solicita al usuario que ingrese el ID de la multa que desea pagar
+	    System.out.print("Ingresa el ID de la multa que deseas pagar: ");
+	    int idMultaAPagar = sc.nextInt();
+	    sc.nextLine(); // Limpia el buffer
+
+	    // Busca la multa en la lista de multas del usuario
+	    Multa multaAPagar = null;
+	    List<Multa> multasPendientes = user.getMultas();
+	    for (Multa multa : multasPendientes) {
+	        if (multa.getIdMulta() == idMultaAPagar) {
+	            multaAPagar = multa;
+	            break;
+	        }
+	    }
+
+	    if (multaAPagar != null) {
+	        // Realiza el pago de la multa
+	        String mensajePago = multaAPagar.pagarMulta();
+	        System.out.println(mensajePago);
+	    } else {
+	        System.out.println("Multa no encontrada. Verifica el ID de la multa.");
+	    }
+	}
 	
 	private static void sesionInvitado() {
 		Usuario invitado = new Usuario("Invitado", "Sin correo", 0, 0);
