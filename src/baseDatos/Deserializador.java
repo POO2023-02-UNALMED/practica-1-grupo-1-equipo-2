@@ -26,7 +26,7 @@ public class Deserializador {
 			sis.setBibliotecas((ArrayList<Biblioteca>) obin.readObject());
 			obin.close();
 		} catch (IOException | ClassNotFoundException e) {
-			System.out.println("Error en la deserializacion");
+			System.out.println("Error en la deserializacion de bibliotecas");
 		}
 		
 		
@@ -39,7 +39,7 @@ public class Deserializador {
 			sis.setLibros((ArrayList<Libro>) obin.readObject());
 			obin.close();
 		} catch (IOException | ClassNotFoundException e) {
-			System.out.println("Error en la deserializacion");
+			System.out.println("Error en la deserializacion de libros");
 		}
 		
 }
@@ -51,7 +51,7 @@ public class Deserializador {
 			sis.setComputadores((ArrayList<Computador>) obin.readObject());
 			obin.close();
 		} catch (IOException | ClassNotFoundException e) {
-			System.out.println("Error en la deserializacion");
+			System.out.println("Error en la deserializacion de computadores");
 		}
 		
 }
@@ -63,7 +63,7 @@ public class Deserializador {
 			sis.setAutores((ArrayList<Autor>) obin.readObject());
 			obin.close();
 		} catch (IOException | ClassNotFoundException e) {
-			System.out.println("Error en la deserializacion");
+			System.out.println("Error en la deserializacion de autores");
 		}
 		
 }
