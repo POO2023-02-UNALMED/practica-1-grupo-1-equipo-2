@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class Biblioteca implements Serializable{
 	private static final long serialVersionUID = 1L;
     // Atributos de la clase Biblioteca
+	static private int totalSedes;
     private String nombre;
     private String sede;
     private ArrayList<Sala> salas;
@@ -26,6 +27,7 @@ public class Biblioteca implements Serializable{
         this.prestamos = new ArrayList<>();
         this.copias = new ArrayList<>();
         this.pcs = new ArrayList<PC>();
+        totalSedes++;
     }
 
     // Métodos para obtener y establecer el nombre de la biblioteca
@@ -102,6 +104,13 @@ public class Biblioteca implements Serializable{
     }
     public ArrayList<Sala> getSalas() {
 		return salas;
+	}
+    public static int getTotalSedes() {
+		return totalSedes;
+	}
+    
+    public static void setTotalSedes(int totalSedes) {
+		Biblioteca.totalSedes = totalSedes;
 	}
 
     // Método para verificar si hay una copia disponible para un propósito específico

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 public class Libro extends Recurso implements Serializable {
+	static private int totalLibros;
     private String isbn;
     private Autor autor;
     private int año;
@@ -18,7 +19,13 @@ public class Libro extends Recurso implements Serializable {
         this.año = año;
         this.copias = new ArrayList<>();
         autor.getObras().add(this);
+        totalLibros++;
     }
+    
+    public Libro() {
+    	this("Libro sin nombre", 0, "",new Autor(),0);
+    }
+    
 
     // Métodos para obtener el ISBN del libro
     public String getIsbn() {
@@ -44,6 +51,10 @@ public class Libro extends Recurso implements Serializable {
     public int getAño() {
         return año;
     }
+    
+    public static int getTotalLibros() {
+		return totalLibros;
+	}
 
     // Métodos para establecer el año de publicación del libro
     public void setAño(int año) {

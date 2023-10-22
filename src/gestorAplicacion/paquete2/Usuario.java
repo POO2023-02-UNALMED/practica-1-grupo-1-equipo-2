@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 public class Usuario implements Serializable{
 	private static final long serialVersionUID = 1L;
+	private static final int prestamosMaximos = 3;
     private String nombre; // Nombre del usuario
     private String correo; // Correo electrónico del usuario
     private int cedula; // Número de cédula del usuario
@@ -90,20 +91,6 @@ public class Usuario implements Serializable{
     // Método para establecer la lista de multas impuestas al usuario
     public void setMultas(ArrayList<Multa> multas) {
         this.multas = multas;
-    }
-
-    // Método para realizar un préstamo de recursos para eventos
-    public void realizarPrestamoEvento(ArrayList<Copia> copias, ArrayList<PC> pcs, Date fechaInicio, Date fechaFin) {
-        // Lógica para realizar un préstamo de recursos para eventos
-        Prestamo prestamo = new Prestamo(this, "Evento", fechaInicio, fechaFin, copias, pcs);
-        prestamos.add(prestamo);
-    }
-
-    // Método para realizar un préstamo de recursos particulares
-    public void realizarPrestamoParticular(ArrayList<Copia> copias, ArrayList<PC> pcs, Date fechaInicio, Date fechaFin) {
-        // Lógica para realizar un préstamo de recursos particulares
-        Prestamo prestamo = new Prestamo(this, "Particular", fechaInicio, fechaFin, copias, pcs);
-        prestamos.add(prestamo);
     }
 
     // Método para devolver recursos prestados

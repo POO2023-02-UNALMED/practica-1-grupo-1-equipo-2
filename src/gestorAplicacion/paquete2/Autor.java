@@ -18,6 +18,10 @@ public class Autor implements Serializable{
         this.corriente = corriente;
         this.obras = new ArrayList<>();
     }
+    
+    public Autor() {
+    	this("Autor anonimo", "Desconocido", "Desconocido");
+    }
 
     // Método para obtener el nombre del autor
     public String getNombre() {

@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class Prestamo implements Serializable{
 	private static final long serialVersionUID = 1L;
     private int idPrestamo; // Identificador único del préstamo
-    private String tipo; // Tipo de préstamo (por ejemplo, "Evento" o "Particular")
+    private Tipo tipo; // Tipo de préstamo (por ejemplo, "Evento" o "Particular")
     private Usuario usuario; // Usuario que realiza el préstamo
     private Sala sala; //sala que se presta (en caso de prestamo para evento)
     private Date fechaInicio; // Fecha de inicio del préstamo
@@ -16,7 +16,7 @@ public class Prestamo implements Serializable{
     private ArrayList<PC> pcsPrestados; // Computadoras prestadas en el préstamo
 
     // Constructor de prestamo de evento con libro
-    public Prestamo(Usuario usuario, String tipo, Sala sala, Date fechaInicio, Date fechaFin, Copia copia, Biblioteca sede) {
+    public Prestamo(Usuario usuario, Tipo tipo, Sala sala, Date fechaInicio, Date fechaFin, Copia copia, Biblioteca sede) {
         this.tipo = tipo;
         this.usuario = usuario;
         this.fechaInicio = fechaInicio;
@@ -29,7 +29,7 @@ public class Prestamo implements Serializable{
         sede.getCopias().remove(copia);
         sede.getSalas().remove(sala);
     }
-    public Prestamo(Usuario usuario, String tipo, Sala sala, Date fechaInicio, Date fechaFin, PC pc, Biblioteca sede) {
+    public Prestamo(Usuario usuario, Tipo tipo, Sala sala, Date fechaInicio, Date fechaFin, PC pc, Biblioteca sede) {
         this.tipo = tipo;
         this.usuario = usuario;
         this.fechaInicio = fechaInicio;
@@ -44,7 +44,7 @@ public class Prestamo implements Serializable{
     }
     
     //constructor de prestamo particular
-    public Prestamo(Usuario usuario, String tipo, Date fechaInicio, Date fechaFin, Copia copia, Biblioteca sede) {
+    public Prestamo(Usuario usuario, Tipo tipo, Date fechaInicio, Date fechaFin, Copia copia, Biblioteca sede) {
         this.tipo = tipo;
         this.usuario = usuario;
         this.fechaInicio = fechaInicio;
@@ -53,7 +53,11 @@ public class Prestamo implements Serializable{
         this.idPrestamo = generarIdentificadorUnico();
         sede.getCopias().remove(copia);
     }
-
+    
+    public enum Tipo {
+    	EVENTO, PARTICULAR
+    }
+    
     // Método para obtener el identificador único del préstamo
     public int getIdPrestamo() {
         return idPrestamo;
@@ -64,7 +68,7 @@ public class Prestamo implements Serializable{
 	}
 
     // Método para obtener el tipo de préstamo
-    public String getTipo() {
+    public Tipo getTipo() {
         return tipo;
     }
 

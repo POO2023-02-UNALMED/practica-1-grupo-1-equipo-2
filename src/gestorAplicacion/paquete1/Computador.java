@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 public class Computador extends Recurso implements Serializable{
+	static private int totalPCs;
     private String marca;
     private String gama;
     private ArrayList<PC> pcs;
@@ -14,6 +15,11 @@ public class Computador extends Recurso implements Serializable{
         this.marca = marca;
         this.gama = gama;
         this.pcs = new ArrayList<>();
+        totalPCs++;
+    }
+    
+    public Computador() {
+    	this("Sin referencia", 0, "Sin marca", "Sin gama");
     }
 
     // Métodos para obtener y establecer la marca del computador
@@ -29,6 +35,10 @@ public class Computador extends Recurso implements Serializable{
     public String getGama() {
         return gama;
     }
+    
+    public static int getTotalPCs() {
+		return totalPCs;
+	}
 
     public void setGama(String gama) {
         this.gama = gama;

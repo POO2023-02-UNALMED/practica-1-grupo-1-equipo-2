@@ -29,15 +29,12 @@ public class Main {
 			System.out.println("Bienvenido al sistema de biliotecas de nuestra institución");
 			System.out.println("----------------------------------------------------------");
 			System.out.println("Por favor, ingrese su usuario o si desea ingresar como invitado: ");
-			System.out.println("1. Ingresar usuario");
-			System.out.println("2. Crear usuario");
-			System.out.println("3. Ingresar como invitado");
+			System.out.println("1. Ingresar como Administrador");
 			System.out.println("----------------------------------------------------------");
 			System.out.println("Elije la opcion que quieras realizar");
 			opcion = sc.nextByte(); 
 			switch(opcion) {
 			case 1:
-				sesionInvitado();
 				enSesion = true;
 				break;
 			default: 
@@ -68,6 +65,7 @@ public class Main {
 				recursoEvento();
 				break;
 			case 4:
+				regresarPrestamo();
 				break;
 			case 5:
 				gestionMultas();				
@@ -364,7 +362,7 @@ public class Main {
 			op2 = sc.nextByte();
 			finicio = new Date();
 			ffinal = new Date(2023,12,12);
-			prestamo = new Prestamo(user,"Evento",evento.getSala(),finicio,ffinal,sede.getCopias().get(op2), sede);
+			prestamo = new Prestamo(user,Prestamo.Tipo.EVENTO,evento.getSala(),finicio,ffinal,sede.getCopias().get(op2), sede);
 			sede.getPrestamos().add(prestamo);
 			System.out.println("Reserva realizada con exito en sala: " + prestamo.getSala() + " con el siguiente material: ");
 			prestamo.getCopiasPrestadas();
@@ -380,7 +378,7 @@ public class Main {
 			op2 = sc.nextByte();
 			finicio = new Date();
 			ffinal = new Date(2023,12,12);
-			prestamo = new Prestamo(user,"Evento",evento.getSala(),finicio,ffinal,sede.getPCS().get(op2), sede);
+			prestamo = new Prestamo(user,Prestamo.Tipo.EVENTO,evento.getSala(),finicio,ffinal,sede.getPCS().get(op2), sede);
 			sede.getPrestamos().add(prestamo);
 			System.out.println("Reserva realizada con exito en sala: " + prestamo.getSala() + " con el siguiente material: ");
 			prestamo.getPcsPrestados();
@@ -393,7 +391,7 @@ public class Main {
 		}
 		
 	// Método para devolver un préstamo específico
-	public void regresarPrestamo() {
+	private static void regresarPrestamo() {
 	    // Mostrar los préstamos vigentes para que el usuario elija cuál devolver
 	    ArrayList<String> prestamosDetallados = user.obtenerPrestamosVigentesConDetalles();
 	    if (prestamosDetallados.isEmpty()) {
@@ -453,13 +451,13 @@ public class Main {
 
 
 	// Método para calcular los días de retraso entre dos fechas
-	private int calcularDiasDeRetraso(Date fechaActual, Date fechaVencimiento) {
+	static private int calcularDiasDeRetraso(Date fechaActual, Date fechaVencimiento) {
 	    long diferencia = fechaActual.getTime() - fechaVencimiento.getTime();
 	    return (int) (diferencia / (1000 * 60 * 60 * 24)); // Milisegundos a días
 	}
 
 	// Método para calcular el valor de la multa basado en los días de retraso
-	private double calcularValorMulta(int diasDeRetraso) {
+	static private double calcularValorMulta(int diasDeRetraso) {
 	    // Puedes definir tu propia lógica para calcular el valor de la multa
 	    // Por ejemplo, $1 por cada día de retraso
 	    return diasDeRetraso * 1.0;
@@ -509,10 +507,6 @@ public class Main {
 	    }
 	}
 	
-	private static void sesionInvitado() {
-		Usuario invitado = new Usuario("Invitado", "Sin correo", 0, 0);
-			
-	}
 	
 	/** 
 	 * Metodo para cerrar el programa y serializar los objetos

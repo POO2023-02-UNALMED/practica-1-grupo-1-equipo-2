@@ -3,14 +3,17 @@ import java.io.Serializable;
 
 public class PC extends Computador implements Serializable{
     private Computador modelo; // El modelo de computador al que pertenece esta PC
-    private boolean estado; // Indica si la PC está disponible o no
+    private boolean disponibleEvento; // Indica si el pc está disponible para eventos
+    private boolean disponibleParticular; // Indica si el pc está disponible para préstamos particulares
     private Biblioteca sede; // La sede a la que está asignada esta PC
+    
 
     // Constructor de la clase PC
     public PC(Computador modelo, boolean estado, Biblioteca sede) {
     	super(modelo.getNombre(),modelo.getIdRecurso(),modelo.getMarca(),modelo.getGama());
         this.modelo = modelo;
-        this.estado = estado;
+        this.disponibleEvento = true;
+        this.disponibleParticular = true;
         this.sede = sede;
     }
 
@@ -23,16 +26,26 @@ public class PC extends Computador implements Serializable{
     public void setModelo(Computador modelo) {
         this.modelo = modelo;
     }
-
-    // Método para verificar si la PC está disponible o no
-    public boolean isEstado() {
-        return estado;
-    }
-
-    // Método para establecer el estado de la PC
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
+    
+    // Método para mirar si está disponible para evento
+    public boolean isDisponibleEvento() {
+		return disponibleEvento;
+	}
+    
+    // Método para mirar si está disponible para particular
+    public boolean isDisponibleParticular() {
+		return disponibleParticular;
+	}
+    
+ // Método cambiar estado para evento
+    public void setDisponibleEvento(boolean disponibleEvento) {
+		this.disponibleEvento = disponibleEvento;
+	}
+    
+    // Método cambiar estado para particular
+    public void setDisponibleParticular(boolean disponibleParticular) {
+		this.disponibleParticular = disponibleParticular;
+	}
 
     // Método para obtener la sede a la que está asignada esta PC
     public Biblioteca getSede() {
