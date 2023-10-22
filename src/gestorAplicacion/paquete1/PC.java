@@ -1,9 +1,7 @@
 package gestorAplicacion.paquete1;
-
 import java.io.Serializable;
 
-public class PC extends Computador implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class PC extends Computador implements Serializable{
     private Computador modelo; // El modelo de computador al que pertenece esta PC
     private boolean estado; // Indica si la PC está disponible o no
     private Biblioteca sede; // La sede a la que está asignada esta PC

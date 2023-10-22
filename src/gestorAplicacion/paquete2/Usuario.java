@@ -1,12 +1,12 @@
 package gestorAplicacion.paquete2;
-import java.io.Serializable;
 import java.util.*;
 import gestorAplicacion.paquete1.*;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Usuario implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Usuario implements Serializable{
+	private static final long serialVersionUID = 1L;
     private String nombre; // Nombre del usuario
     private String correo; // Correo electrónico del usuario
     private int cedula; // Número de cédula del usuario
@@ -15,7 +15,6 @@ public class Usuario implements Serializable {
     private ArrayList<Prestamo> prestamos; // Lista de préstamos realizados por el usuario
     private ArrayList<Multa> multas; // Lista de multas impuestas al usuario
     private static int contadorUsuarios = 0; // Contador para asignar identificadores únicos
-    private Biblioteca biblioteca; // Instancia de la biblioteca
 
     // Constructor de la clase Usuario
     public Usuario(String nombre, String correo, int cedula, int contraseña) {
@@ -162,46 +161,5 @@ public class Usuario implements Serializable {
         }
 
         return prestamosDetallados;
-    }
-    
-    // Método para añadir un libro a la base de datos de la biblioteca
-    public void añadirLibro(Libro libro) {
-        // Verificar si el libro ya existe en la base de datos
-        if (!biblioteca.getLibros().contains(libro)) {
-            // El libro no existe, se puede agregar a la base de datos
-            biblioteca.getLibros().add(libro);
-            System.out.println("Libro añadido con éxito a la base de datos.");
-        } else {
-            System.out.println("El libro ya existe en la base de datos.");
-        }
-    }
-
-
-    // Método para remover un libro de la base de datos de la biblioteca
-    public void removerLibro(Libro libro) {
-        // Lógica para remover un libro de la base de datos de la biblioteca
-    }
-    
-    // Método para eliminar una multa de un usuario
-    public void eliminarMulta(Usuario usuario, int idMulta) {
-        // Obtener la lista de multas del usuario
-        ArrayList<Multa> multasUsuario = usuario.getMultas();
-        
-        // Buscar la multa con el ID especificado
-        Multa multaAEliminar = null;
-        for (Multa multa : multasUsuario) {
-            if (multa.getIdMulta() == idMulta) {
-                multaAEliminar = multa;
-                break;
-            }
-        }
-        
-        // Si se encontró la multa, eliminarla
-        if (multaAEliminar != null) {
-            multasUsuario.remove(multaAEliminar);
-            System.out.println("Multa eliminada con éxito.");
-        } else {
-            System.out.println("No se encontró una multa con el ID especificado.");
-        }
     }
 }

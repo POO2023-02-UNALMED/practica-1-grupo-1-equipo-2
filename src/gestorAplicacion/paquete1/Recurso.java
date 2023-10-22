@@ -1,10 +1,9 @@
 package gestorAplicacion.paquete1;
+import gestorAplicacion.paquete2.*;
 import java.io.Serializable;
 
-import gestorAplicacion.paquete2.*;
-
-public abstract class Recurso implements Serializable {
-    private static final long serialVersionUID = 1L;
+public abstract class Recurso implements Serializable{
+	private static final long serialVersionUID = 1L;
     private String nombre;
     private int idRecurso;
 

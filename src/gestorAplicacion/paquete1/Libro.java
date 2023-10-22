@@ -1,11 +1,10 @@
 package gestorAplicacion.paquete1;
 import gestorAplicacion.paquete2.Autor;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.io.Serializable;
 
 public class Libro extends Recurso implements Serializable {
-    private static final long serialVersionUID = 1L;
     private String isbn;
     private Autor autor;
     private int año;

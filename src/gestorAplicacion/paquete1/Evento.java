@@ -1,9 +1,9 @@
 package gestorAplicacion.paquete1;
-import java.io.Serializable;
 import java.util.*;
+import java.io.Serializable;
 
-public class Evento implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Evento implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private Biblioteca biblioteca;
 	private Sala sala;
 	ArrayList<Recurso> material;
