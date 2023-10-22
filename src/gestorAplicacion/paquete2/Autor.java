@@ -1,10 +1,12 @@
 package gestorAplicacion.paquete2;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import gestorAplicacion.paquete1.Libro;
 
-public class Autor {
+public class Autor implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String nombre; // Nombre del autor
     private String nacionalidad; // Nacionalidad del autor
     private String corriente; // Corriente literaria del autor

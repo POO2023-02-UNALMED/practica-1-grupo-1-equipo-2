@@ -1,9 +1,12 @@
 package gestorAplicacion.paquete2;
 import gestorAplicacion.paquete1.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class BaseDatos {
+public class BaseDatos implements Serializable {
+    private static final long serialVersionUID = 1L;
 	public ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 	public ArrayList<Libro> libros = new ArrayList<Libro>();
 	

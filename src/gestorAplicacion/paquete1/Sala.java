@@ -1,6 +1,9 @@
 package gestorAplicacion.paquete1;
 
-public class Sala {
+import java.io.Serializable;
+
+public class Sala implements Serializable {
+    private static final long serialVersionUID = 1L;
 	private Biblioteca biblioteca;
 	private String nombre;
 	private int capacidad;

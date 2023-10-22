@@ -1,8 +1,10 @@
 package gestorAplicacion.paquete1;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Computador extends Recurso {
+public class Computador extends Recurso implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String marca;
     private String gama;
     private ArrayList<PC> pcs;
