@@ -86,105 +86,114 @@ public class Main {
 	 * y realizar un prestamo a nombre del usuario
 	 */
 	private static void pedirComputadorOLibro() {
-		int op1;
-		System.out.println("Ingresa el recurso del cual deseas consultar disponibilidad");
-		System.out.println("0. Libro \n1. Computador \n2. Volver al menú principal. ");
-		op1 = sc.nextByte();
-		switch (op1) {
-		//caso libro
-		case 0:
-			System.out.println("Ingrese el nombre del libro que desees consultar o ingrese 0 para volver al menú anterior");
-			sc.nextLine();
-			String nombre = sc.nextLine();
-			if(nombre == "0") {
-				pedirComputadorOLibro();
-				break;
-			}
-			Copia copia = null;
-			//Busca en la base de datos de libros si existe un libro con ese nombre, no importa la sede
-			boolean encontrado = false;
-			for (Libro l : sistema.getLibros()) { 
-				if (l.getNombre().equalsIgnoreCase(nombre)) {
-					encontrado = true;
-					System.out.println("Libro encontrado");
-					System.out.println("El libro: " + "'" + l.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
-					ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>();
-					for (Biblioteca b : sistema.getBibliotecas()) { 
-						if (b.hayCopia(nombre, "Particular")) {
-							System.out.println(sistema.getBibliotecas().indexOf(b) + ". " + b.getSede());
-							sedes.add(b);
-						}
-					}
-				}
-			}
-			if(encontrado == false) {
-				System.out.println("Libro no encontrado");
-				break;
-			}
-			if(encontrado == true) {
-				//Si comprueba que existe ese libro, muestra las sedes que tengan al menos una copia del mismo
-				System.out.println("Seleccione la sede de su preferencia para realizar el prestamo: ");
-				byte op = sc.nextByte();
-				copia = sistema.getBibliotecas().get(op).hallarcopiaPorNombre(nombre);
-				sistema.getBibliotecas().get(op).remover(copia);
-				System.out.println("Ingrese el dia hasta el cual desea hacer el prestamo: ");
-				int dia = sc.nextInt();
-				System.out.println("Ingrese el mes hasta el cual desea hacer el prestamo: ");
-				int mes = sc.nextInt();
-				
-				// Remueve la copia de la base de datos de la sede y realiza el prestamo a nombre del usuario
-				
-				//Date fecha = new Date(2023,mes,dia);
-				//Prestamo prestamo = new Prestamo(user,"Prestamo de libro", fecha, fecha, copia);
-				//user.añadirPrestamo(prestamo);
-				//System.out.println("¡El prestamo se ha realizado con exito!");
-				//System.out.println("Por favor regresa tu libro ;)");
-			}
-				
-		//caso computador
-		case 1:
-			boolean encontradopc = false;
-			System.out.println("Ingrese el modelo del computador que desea consultar: ");
-			sc.nextLine();
-			String modelo = sc.nextLine();
-			PC pc = null;
-			//Busca en la base de datos de computadores si existe un computador con ese nombre, no importa la sede
-			for (Computador c : sistema.getComputadores()) {
-				if (c.getNombre().equalsIgnoreCase(modelo)) {
-					encontradopc = true;
-			        System.out.println("Computador encontrado");
-			        System.out.println("El computador: " + "'" + c.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
-			        ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>();
-				    for (Biblioteca b : sistema.getBibliotecas()) { 
-				    	if (b.hallarpcPorNombre(modelo) instanceof PC) {
-				    		System.out.println(sistema.getBibliotecas().indexOf(b) + ". " + b.getSede());
-				    		sedes.add(b);
-				    	}
-				    }
-				}
-			}
+	    int op1;
+	    System.out.println("Ingresa el recurso del cual deseas consultar disponibilidad");
+	    System.out.println("0. Libro \n1. Computador \n2. Volver al menú principal. ");
+	    op1 = sc.nextByte();
+	    switch (op1) {
+	        //caso libro
+	        case 0:
+	            while(true) {
+	                System.out.println("Ingrese el nombre del libro que desees consultar o ingrese 0 para volver al menú anterior");
+	                sc.nextLine();
+	                String nombre = sc.nextLine();
+	                if(nombre.equals("0")) {
+	                    break;
+	                }
+	                Copia copia = null;
+	              //Busca en la base de datos de libros si existe un libro con ese nombre, no importa la sede
+	                boolean encontrado = false;
+	                ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>(); // Move this line outside the loop
+	                for (Libro l : sistema.getLibros()) { 
+	                    if (l.getNombre().equalsIgnoreCase(nombre)) {
+	                        encontrado = true;
+	                        System.out.println("Libro encontrado");
+	                        System.out.println(l.getCopias());
+	                        System.out.println("El libro: " + "'" + l.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
+	                        for (Biblioteca b : sistema.getBibliotecas()) { 
+	                            if (b.hayCopia(nombre, "Particular")) {
+	                                System.out.println(sistema.getBibliotecas().indexOf(b) + ". " + b.getSede());
+	                                sedes.add(b);
+	                            }
+	                        }
+	                        break;
+	                    }
+	                }
+	                if(encontrado == false) {
+	                    System.out.println("Libro no encontrado");
+	                    continue;
+	                }
+	                if(encontrado == true) {
+	                    //Si comprueba que existe ese libro, muestra las sedes que tengan al menos una copia del mismo
+	                    System.out.println("Seleccione la sede de su preferencia para realizar el prestamo: ");
+	                    byte op = sc.nextByte();
+	                    copia = sistema.getBibliotecas().get(op).hallarcopiaPorNombre(nombre);
+	                    sistema.getBibliotecas().get(op).remover(copia);
+	                    System.out.println("Ingrese el dia hasta el cual desea hacer el prestamo: ");
+	                    int dia = sc.nextInt();
+	                    System.out.println("Ingrese el mes hasta el cual desea hacer el prestamo: ");
+	                    int mes = sc.nextInt();
+	                    
+	                    // Remueve la copia de la base de datos de la sede y realiza el prestamo a nombre del usuario
+	                    
+	                    //Date fecha = new Date(2023,mes,dia);
+	                    //Prestamo prestamo = new Prestamo(user,"Prestamo de libro", fecha, fecha, copia);
+	                    //user.añadirPrestamo(prestamo);
+	                    //System.out.println("¡El prestamo se ha realizado con exito!");
+	                    //System.out.println("Por favor regresa tu libro ;)");
+	                }
+	            }
+	            break;
+	            
+	        //caso computador
+	        case 1:
+	            while(true) {
+	                boolean encontradopc = false;
+	                System.out.println("Ingrese el modelo del computador que desea consultar: ");
+	                sc.nextLine();
+	                String modelo = sc.nextLine();
+	                PC pc = null;
+	                //Busca en la base de datos de computadores si existe un computador con ese nombre, no importa la sede
+	                for (Computador c : sistema.getComputadores()) {
+	                    if (c.getNombre().equalsIgnoreCase(modelo)) {
+	                        encontradopc = true;
+	                        System.out.println("Computador encontrado");
+	                        System.out.println("El computador: " + "'" + c.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
+	                        ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>();
+	                        for (Biblioteca b : sistema.getBibliotecas()) { 
+	                            if (b.hallarpcPorNombre(modelo) instanceof PC) {
+	                                System.out.println(sistema.getBibliotecas().indexOf(b) + ". " + b.getSede());
+	                                sedes.add(b);
+	                            }
+	                        }
+	                    }
+	                }
 
-			if(encontradopc == false) {
-				System.out.println("Computador no encontrado");
-			}
-			if(encontradopc == true) {
-				//Una vez comprobado que existe, muestra las sedes donde hay un pc de ese modelo
-				System.out.println("Seleccione la sede de su preferencia para realizar el prestamo: ");
-				byte op2 = sc.nextByte();
-				pc = sistema.getBibliotecas().get(op2).hallarpcPorNombre(modelo);
-				sistema.getBibliotecas().get(op2).remover(pc);
-				System.out.println("¡El prestamo se ha realizado con exito!");
-				System.out.println("Por favor regresa tu computador");
-				break;
-			}
-		case 2:
-			System.out.println("Volviendo al menú principal");
-			break;
-		default:
-			System.out.println("Ingrese una opción correcta");
-		}
-		
+	                if(encontradopc == false) {
+	                    System.out.println("Computador no encontrado");
+	                    continue;
+	                }
+	                if(encontradopc == true) {
+	                    //Una vez comprobado que existe, muestra las sedes donde hay un pc de ese modelo
+	                    System.out.println("Seleccione la sede de su preferencia para realizar el prestamo: ");
+	                    byte op2 = sc.nextByte();
+	                    pc = sistema.getBibliotecas().get(op2).hallarpcPorNombre(modelo);
+	                    sistema.getBibliotecas().get(op2).remover(pc);
+	                    System.out.println("¡El prestamo se ha realizado con exito!");
+	                    System.out.println("Por favor regresa tu computador");
+	                    break;
+	                }
+	            }
+	            break;
+
+	        case 2:
+	            System.out.println("Volviendo al menú principal");
+	            break;
+	        default:
+	            System.out.println("Ingrese una opción correcta");
+	    }
 	}
+
 
 	/**
 	 * Metodo encargado de agregar o eliminar recursos de la base de datos general y posteriormente

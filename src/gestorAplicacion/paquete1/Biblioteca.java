@@ -115,19 +115,20 @@ public class Biblioteca implements Serializable{
 
     // Método para verificar si hay una copia disponible para un propósito específico
     public boolean hayCopia(String nombreLibro, String proposito) {
-        for (Libro libro : libros) {
+        boolean estado = false;
+    	for (Libro libro : libros) {
             if (libro.getNombre().equals(nombreLibro)) {
                 for (Copia copia : libro.getCopias()) {
                     // Verificar la disponibilidad según el propósito
                     if (proposito.equals("Evento") && copia.isDisponibleEvento()) {
-                        return true; // Hay una copia disponible para eventos
+                        estado=true; // Hay una copia disponible para eventos
                     } else if (proposito.equals("Particular") && copia.isDisponibleParticular()) {
-                        return true; // Hay una copia disponible para préstamos particulares
+                        estado=true; // Hay una copia disponible para préstamos particulares
                     }
                 }
             }
         }
-        return false; // No se encontraron copias disponibles para el propósito específico
+        return estado; // No se encontraron copias disponibles para el propósito específico
     }
 
 	
