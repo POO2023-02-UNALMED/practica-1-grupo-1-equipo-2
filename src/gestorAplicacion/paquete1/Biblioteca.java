@@ -116,20 +116,31 @@ public class Biblioteca implements Serializable{
     // Método para verificar si hay una copia disponible para un propósito específico
     public boolean hayCopia(String nombreLibro, String proposito) {
         boolean estado = false;
-    	for (Libro libro : libros) {
-            if (libro.getNombre().equals(nombreLibro)) {
-                for (Copia copia : libro.getCopias()) {
-                    // Verificar la disponibilidad según el propósito
-                    if (proposito.equals("Evento") && copia.isDisponibleEvento()) {
-                        estado=true; // Hay una copia disponible para eventos
-                    } else if (proposito.equals("Particular") && copia.isDisponibleParticular()) {
-                        estado=true; // Hay una copia disponible para préstamos particulares
-                    }
-                }
-            }
+        for (Copia copia : copias) {
+        	// Verificar la disponibilidad según el propósito
+        	if (copia.getNombre().equals(nombreLibro) && proposito.equals("Evento") && copia.isDisponibleEvento()) {
+        		estado=true; // Hay una copia disponible para eventos
+        	} else if (copia.getNombre().equals(nombreLibro) && proposito.equals("Particular") && copia.isDisponibleParticular()) {
+        		estado=true; // Hay una copia disponible para préstamos particulares
+        	}
         }
         return estado; // No se encontraron copias disponibles para el propósito específico
     }
+    
+    // Método para verificar si hay un pc disponible para un propósito específico
+    public boolean hayPC(String nombreComputador, String proposito) {
+        boolean estado = false;
+        for (PC pc : pcs) {
+        	// Verificar la disponibilidad según el propósito
+        	if (pc.getNombre().equals(nombreComputador) && proposito.equals("Evento") && pc.isDisponibleEvento()) {
+        		estado=true; // Hay una copia disponible para eventos
+        	} else if (pc.getNombre().equals(nombreComputador) && proposito.equals("Particular") && pc.isDisponibleParticular()) {
+        		estado=true; // Hay una copia disponible para préstamos particulares
+        	}
+        }
+        return estado; // No se encontraron copias disponibles para el propósito específico
+    }
+
 
 	
 	// Método para encontrar el estado de una copia por su ID

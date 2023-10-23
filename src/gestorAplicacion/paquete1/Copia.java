@@ -12,7 +12,6 @@ public class Copia extends Libro implements Serializable{
     public Copia(int idCopia, Libro libro, Biblioteca ubicacion) {
     	super(libro.getNombre(),1,libro.getIsbn(), libro.getAutor(),libro.getAño());
         this.idCopia = idCopia;
-        this.copiaDe = copiaDe;
         this.disponibleEvento = true; // Por defecto, disponible para eventos
         this.disponibleParticular = true; // Por defecto, disponible para préstamos particulares
         this.ubicacion = ubicacion;

@@ -54,6 +54,17 @@ public class Prestamo implements Serializable{
         sede.getCopias().remove(copia);
     }
     
+  //constructor de prestamo particular
+    public Prestamo(Usuario usuario, Tipo tipo, Date fechaInicio, Date fechaFin, PC pc, Biblioteca sede) {
+        this.tipo = tipo;
+        this.usuario = usuario;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        // Generar un identificador único para el préstamo (puedes implementar esta lógica)
+        this.idPrestamo = generarIdentificadorUnico();
+        sede.getPCS().remove(pc);
+    }
+    
     public enum Tipo {
     	EVENTO, PARTICULAR
     }
