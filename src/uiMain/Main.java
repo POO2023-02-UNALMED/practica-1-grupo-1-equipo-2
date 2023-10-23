@@ -36,6 +36,7 @@ public class Main {
 			switch(opcion) {
 			case 1:
 				enSesion = true;
+				System.out.println("Sesion iniciada correctamente");
 				break;
 			default: 
 				System.out.println("Por favor, seleccione una opcion correcta");
@@ -43,7 +44,7 @@ public class Main {
 		}	
 		
 		do {
-			System.out.println("Sesion iniciada correctamente \nPor favor seleccione la opcion que desee");
+			System.out.println("Por favor seleccione la opcion que desee");
 			System.out.println("----------------------------------------------------------");
 			System.out.println("1. Consulta de disponibilidad de libro o computador");
 			System.out.println("2. Agregar libro o computador a la base de datos");
@@ -77,7 +78,7 @@ public class Main {
 				System.out.println("Opcion incorrecta, por favor, escoge otra opcion");
 			}		
 		}
-		while (op != 5);
+		while (op != 6);
 	}
 	
 	/**
@@ -87,18 +88,24 @@ public class Main {
 	private static void pedirComputadorOLibro() {
 		int op1;
 		System.out.println("Ingresa el recurso del cual deseas consultar disponibilidad");
-		System.out.println("0. Libro \n1. Computador");
+		System.out.println("0. Libro \n1. Computador \n2. Volver al menú principal. ");
 		op1 = sc.nextByte();
 		switch (op1) {
 		//caso libro
-		case 0: 
-			System.out.println("Ingrese el nombre del libro que desees consultar: ");
+		case 0:
+			System.out.println("Ingrese el nombre del libro que desees consultar o ingrese 0 para volver al menú anterior");
 			sc.nextLine();
 			String nombre = sc.nextLine();
+			if(nombre == "0") {
+				pedirComputadorOLibro();
+				break;
+			}
 			Copia copia = null;
 			//Busca en la base de datos de libros si existe un libro con ese nombre, no importa la sede
+			boolean encontrado = false;
 			for (Libro l : sistema.getLibros()) { 
-				if (l.getNombre().equalsIgnoreCase(nombre)) {	
+				if (l.getNombre().equalsIgnoreCase(nombre)) {
+					encontrado = true;
 					System.out.println("Libro encontrado");
 					System.out.println("El libro: " + "'" + l.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
 					ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>();
@@ -110,61 +117,75 @@ public class Main {
 					}
 				}
 			}
-			//Si comprueba que existe ese libro, muestra las sedes que tengan al menos una copia del mismo
-			System.out.println("Seleccione la sede de su preferencia para realizar el prestamo: ");
-			byte op = sc.nextByte();
-			copia = sistema.getBibliotecas().get(op).hallarcopiaPorNombre(nombre);
-			sistema.getBibliotecas().get(op).remover(copia);
-			System.out.println("Ingrese el dia hasta el cual desea hacer el prestamo: ");
-			int dia = sc.nextInt();
-			System.out.println("Ingrese el mes hasta el cual desea hacer el prestamo: ");
-			int mes = sc.nextInt();
-			
-			// Remueve la copia de la base de datos de la sede y realiza el prestamo a nombre del usuario
-			
-			//Date fecha = new Date(2023,mes,dia);
-			//Prestamo prestamo = new Prestamo(user,"Prestamo de libro", fecha, fecha, copia);
-			//user.añadirPrestamo(prestamo);
-			//System.out.println("¡El prestamo se ha realizado con exito!");
-			//System.out.println("Por favor regresa tu libro ;)");
+			if(encontrado == false) {
+				System.out.println("Libro no encontrado");
+				break;
+			}
+			if(encontrado == true) {
+				//Si comprueba que existe ese libro, muestra las sedes que tengan al menos una copia del mismo
+				System.out.println("Seleccione la sede de su preferencia para realizar el prestamo: ");
+				byte op = sc.nextByte();
+				copia = sistema.getBibliotecas().get(op).hallarcopiaPorNombre(nombre);
+				sistema.getBibliotecas().get(op).remover(copia);
+				System.out.println("Ingrese el dia hasta el cual desea hacer el prestamo: ");
+				int dia = sc.nextInt();
+				System.out.println("Ingrese el mes hasta el cual desea hacer el prestamo: ");
+				int mes = sc.nextInt();
 				
-			//caso computador
-			case 1: 
+				// Remueve la copia de la base de datos de la sede y realiza el prestamo a nombre del usuario
+				
+				//Date fecha = new Date(2023,mes,dia);
+				//Prestamo prestamo = new Prestamo(user,"Prestamo de libro", fecha, fecha, copia);
+				//user.añadirPrestamo(prestamo);
+				//System.out.println("¡El prestamo se ha realizado con exito!");
+				//System.out.println("Por favor regresa tu libro ;)");
+			}
+				
+		//caso computador
+		case 1:
+			boolean encontradopc = false;
 			System.out.println("Ingrese el modelo del computador que desea consultar: ");
 			sc.nextLine();
 			String modelo = sc.nextLine();
 			PC pc = null;
 			//Busca en la base de datos de computadores si existe un computador con ese nombre, no importa la sede
 			for (Computador c : sistema.getComputadores()) {
-				if (c.getNombre().equalsIgnoreCase(modelo)) {    
-			          System.out.println("Computador encontrado");
-			          System.out.println("El computador: " + "'" + c.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
-			          ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>();
-				            for (Biblioteca b : sistema.getBibliotecas()) { 
-				                if (b.hallarpcPorNombre(modelo) instanceof PC) {
-				                    System.out.println(sistema.getBibliotecas().indexOf(b) + ". " + b.getSede());
-				                    sedes.add(b);
-				                }
-				            }
-				        }
+				if (c.getNombre().equalsIgnoreCase(modelo)) {
+					encontradopc = true;
+			        System.out.println("Computador encontrado");
+			        System.out.println("El computador: " + "'" + c.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
+			        ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>();
+				    for (Biblioteca b : sistema.getBibliotecas()) { 
+				    	if (b.hallarpcPorNombre(modelo) instanceof PC) {
+				    		System.out.println(sistema.getBibliotecas().indexOf(b) + ". " + b.getSede());
+				    		sedes.add(b);
+				    	}
 				    }
-			//Una vez comprobado que existe, muestra las sedes donde hay un pc de ese modelo
-			System.out.println("Seleccione la sede de su preferencia para realizar el prestamo: ");
-			byte op2 = sc.nextByte();
-			pc = sistema.getBibliotecas().get(op2).hallarpcPorNombre(modelo);
-			sistema.getBibliotecas().get(op2).remover(pc);
-			System.out.println("¡El prestamo se ha realizado con exito!");
-			System.out.println("Por favor regresa tu computador ;)");
-			break;
-					
-				default:
-					System.out.println("Ingrese una opción correcta");
-		}
-					
-		
-				
+				}
 			}
-			
+
+			if(encontradopc == false) {
+				System.out.println("Computador no encontrado");
+			}
+			if(encontradopc == true) {
+				//Una vez comprobado que existe, muestra las sedes donde hay un pc de ese modelo
+				System.out.println("Seleccione la sede de su preferencia para realizar el prestamo: ");
+				byte op2 = sc.nextByte();
+				pc = sistema.getBibliotecas().get(op2).hallarpcPorNombre(modelo);
+				sistema.getBibliotecas().get(op2).remover(pc);
+				System.out.println("¡El prestamo se ha realizado con exito!");
+				System.out.println("Por favor regresa tu computador");
+				break;
+			}
+		case 2:
+			System.out.println("Volviendo al menú principal");
+			break;
+		default:
+			System.out.println("Ingrese una opción correcta");
+		}
+		
+	}
+
 	/**
 	 * Metodo encargado de agregar o eliminar recursos de la base de datos general y posteriormente
 	 * modificar las copiasd de cada sede
@@ -463,11 +484,8 @@ public class Main {
 	    return diasDeRetraso * 1.0;
 	}
 
-	
-	
-	public static void mostrarMultas(Usuario usuario) {
-	    // Obtiene las multas pendientes del usuario
-	    List<Multa> multasPendientes = usuario.getMultas();
+	public static void gestionMultas() {
+	    List<Multa> multasPendientes = user.getMultas();
 
 	    if (multasPendientes.isEmpty()) {
 	        System.out.println("No tienes multas pendientes.");
@@ -476,34 +494,29 @@ public class Main {
 	        for (Multa multa : multasPendientes) {
 	            System.out.println("ID: " + multa.getIdMulta() + ", Tipo: " + multa.getTipo() + ", Fecha: " + multa.getFechaImpuesta());
 	        }
-	    }
-	}
+		    // Solicita al usuario que ingrese el ID de la multa que desea pagar
+		    System.out.print("Ingresa el ID de la multa que deseas pagar: ");
+		    int idMultaAPagar = sc.nextInt();
+		    sc.nextLine(); // Limpia el buffer
 
-	public static void gestionMultas() {
-	    // Muestra las multas pendientes del usuario
-	    mostrarMultas(user);
+		    // Busca la multa en la lista de multas del usuario
+		    Multa multaAPagar = null;
+		    List<Multa> multasPendientes1 = user.getMultas();
+		    for (Multa multa : multasPendientes1) {
+		        if (multa.getIdMulta() == idMultaAPagar) {
+		            multaAPagar = multa;
+		            break;
+		        }
+		    }
 
-	    // Solicita al usuario que ingrese el ID de la multa que desea pagar
-	    System.out.print("Ingresa el ID de la multa que deseas pagar: ");
-	    int idMultaAPagar = sc.nextInt();
-	    sc.nextLine(); // Limpia el buffer
-
-	    // Busca la multa en la lista de multas del usuario
-	    Multa multaAPagar = null;
-	    List<Multa> multasPendientes = user.getMultas();
-	    for (Multa multa : multasPendientes) {
-	        if (multa.getIdMulta() == idMultaAPagar) {
-	            multaAPagar = multa;
-	            break;
-	        }
-	    }
-
-	    if (multaAPagar != null) {
-	        // Realiza el pago de la multa
-	        String mensajePago = multaAPagar.pagarMulta();
-	        System.out.println(mensajePago);
-	    } else {
-	        System.out.println("Multa no encontrada. Verifica el ID de la multa.");
+		    if (multaAPagar != null) {
+		        // Realiza el pago de la multa
+		        String mensajePago = multaAPagar.pagarMulta();
+		        System.out.println(mensajePago);
+		    } else {
+		        System.out.println("Multa no encontrada. Verifica el ID de la multa.");
+		        gestionMultas();
+		    }
 	    }
 	}
 	
