@@ -492,7 +492,6 @@ public class Main {
 	private static void regresarPrestamo() {
 	    // Mostrar los préstamos vigentes para que el usuario elija cuál devolver
 		ArrayList<Prestamo> prestamosUsuario = user.getPrestamos();
-	    ArrayList<String> prestamosDetallados = user.obtenerPrestamosVigentesConDetalles();
 	    if (prestamosUsuario.isEmpty()) {
 	        System.out.println("No tienes préstamos vigentes para devolver.");
 	        return;
@@ -504,32 +503,43 @@ public class Main {
 	        System.out.println(i+". Tipo: " + prestamo.getTipo().toString() + 
                     ", Fecha de Inicio: " + prestamo.getFechaInicio() + 
                     ", Fecha de Fin: " + prestamo.getFechaFin() +
-                    ", Sede: " + prestamo.getSede().getNombre() +
-                    ", Items Prestados: " + "Copias: "+prestamo.getCopiasPrestadas() + prestamo.getPcsPrestados());
+                    ", Sede: " + prestamo.getSede().getNombre());
+	        
+            System.out.println("Items Prestados: ");
+            if(prestamo.getCopiasPrestadas() != null) {
+            	System.out.println("Copia: "+prestamo.getCopiasPrestadas());
+            }
+            if(prestamo.getPcsPrestados() != null) {
+            	System.out.println("PC: "+prestamo.getPcsPrestados());
+            }
 	        i++;
 	    }
 
 	    int opcion = sc.nextInt();
 	    sc.nextLine(); // Consumir la nueva línea después del número
 
-	    if (opcion < 1 || opcion > prestamosDetallados.size()) {
+	    if (opcion < 0 || opcion > prestamosUsuario.size()) {
 	        System.out.println("Opción no válida. Debes seleccionar un número de préstamo válido.");
 	        return;
 	    }
 
-	    Prestamo prestamoSeleccionado = user.getPrestamos().get(opcion - 1);
+	    Prestamo prestamoSeleccionado = user.getPrestamos().get(opcion);
 
 	    // Realizar las acciones necesarias para marcar las Copias y PC como disponibles nuevamente
 	    ArrayList<Copia> copiasPrestadas = prestamoSeleccionado.getCopiasPrestadas();
-	    for (Copia copia : copiasPrestadas) {
-	        copia.setDisponibleEvento(true); // Marcar la copia como disponible para eventos
-	        copia.setDisponibleParticular(true); // Marcar la copia como disponible para particulares
+	    if(copiasPrestadas != null) {
+	    	for (Copia copia : copiasPrestadas) {
+		        copia.setDisponibleEvento(true); // Marcar la copia como disponible para eventos
+		        copia.setDisponibleParticular(true); // Marcar la copia como disponible para particulares
+		    }
 	    }
 
 	    ArrayList<PC> pcsPrestados = prestamoSeleccionado.getPcsPrestados();
-	    for (PC pc : pcsPrestados) {
-	        pc.setDisponibleParticular(true); // Marcar la PC como disponible para particulares
-	        pc.setDisponibleEvento(true); // Marcar la copia como disponible para eventos
+	    if(pcsPrestados != null) {
+		    for (PC pc : pcsPrestados) {
+		        pc.setDisponibleParticular(true); // Marcar la PC como disponible para particulares
+		        pc.setDisponibleEvento(true); // Marcar la copia como disponible para eventos
+		    }
 	    }
 
 	    // Eliminar el préstamo seleccionado de la lista de préstamos

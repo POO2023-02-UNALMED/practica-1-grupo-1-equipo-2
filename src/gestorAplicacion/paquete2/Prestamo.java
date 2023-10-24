@@ -27,7 +27,6 @@ public class Prestamo implements Serializable{
         this.idPrestamo = generarIdentificadorUnico();
         copiasPrestadas = new ArrayList<Copia>();
         copiasPrestadas.add(copia);
-        
         sede.getCopias().remove(copia);
         sede.getSalas().remove(sala);
     }
@@ -55,6 +54,8 @@ public class Prestamo implements Serializable{
         this.sede = sede;
         // Generar un identificador único para el préstamo (puedes implementar esta lógica)
         this.idPrestamo = generarIdentificadorUnico();
+        copiasPrestadas = new ArrayList<Copia>();
+        copiasPrestadas.add(copia);
         sede.getCopias().remove(copia);
     }
     
@@ -67,6 +68,8 @@ public class Prestamo implements Serializable{
         this.sede = sede;
         // Generar un identificador único para el préstamo (puedes implementar esta lógica)
         this.idPrestamo = generarIdentificadorUnico();
+        pcsPrestados = new ArrayList<PC>();
+        pcsPrestados.add(pc);
         sede.getPCS().remove(pc);
     }
     

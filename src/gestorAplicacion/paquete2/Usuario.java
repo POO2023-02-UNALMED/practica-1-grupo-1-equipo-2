@@ -116,39 +116,4 @@ public class Usuario implements Serializable{
         // Lógica para eliminar una multa del registro del usuario
         multas.remove(multa);
     }
-    
- // Método para obtener los préstamos vigentes del usuario con detalles
-    public ArrayList<String> obtenerPrestamosVigentesConDetalles() {
-        ArrayList<String> prestamosDetallados = new ArrayList<>();
-
-        // Obtener la fecha actual
-        Date fechaActual = new Date();
-
-        // Recorrer la lista de préstamos
-        for(Prestamo prestamo : prestamos) {
-
-            if (prestamo.getFechaFin().after(fechaActual)) {
-                // El préstamo todavía está vigente
-                String detallesPrestamo = "Tipo: " + prestamo.getTipo().toString() + 
-                                          ", Fecha de Inicio: " + prestamo.getFechaInicio() + 
-                                          ", Fecha de Fin: " + prestamo.getFechaFin() +
-                                          ", Sede: " + prestamo.getSede().getNombre() +
-                                          ", Items Prestados: ";
-
-                // Agregar detalles de copias prestadas
-                for (Copia copia : prestamo.getCopiasPrestadas()) {
-                    detallesPrestamo += "Copia de " + copia.getCopiaDe().getNombre() + ", ";
-                }
-
-                // Agregar detalles de PCs prestadas
-                for (PC pc : prestamo.getPcsPrestados()) {
-                    detallesPrestamo += "PC " + pc.getModelo().getMarca() + ", ";
-                }
-
-                prestamosDetallados.add(detallesPrestamo);
-            }
-        }
-
-        return prestamosDetallados;
-    }
 }
