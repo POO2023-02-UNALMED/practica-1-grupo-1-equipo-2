@@ -6,10 +6,10 @@ import java.io.Serializable;
 
 public class Libro extends Recurso implements Serializable {
 	private static final long serialVersionUID = 1L;
-	static private int totalLibros;
-    private String isbn;
-    private Autor autor;
-    private int año;
+	static protected int totalLibros;
+    protected String isbn;
+    protected Autor autor;
+    protected int año;
     private ArrayList<Copia> copias;
 
     // Constructor de la clase Libro
@@ -70,6 +70,14 @@ public class Libro extends Recurso implements Serializable {
     // Métodos para establecer la lista de copias del libro
     public void setCopias(ArrayList<Copia> copias) {
         this.copias = copias;
+    }
+    
+    public String tipoRecurso() {
+    	return "Libro";
+    }
+    
+    public String toString() {
+    	return this.getNombre();
     }
 }
 

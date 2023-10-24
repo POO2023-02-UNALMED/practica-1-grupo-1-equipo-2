@@ -1,7 +1,7 @@
 package gestorAplicacion.paquete1;
 import java.io.Serializable;
 
-public class Copia extends Libro implements Serializable{
+public class Copia extends Libro implements Serializable, Prestable{
 	private static final long serialVersionUID = 1L;
     private int idCopia; // Identificador único de la copia
     private Libro copiaDe; // El libro del que es una copia
@@ -20,7 +20,7 @@ public class Copia extends Libro implements Serializable{
     }
     
     // Método para obtener el identificador único de la copia
-    public int getIdCopia() {
+    public int getID() {
         return idCopia;
     }
 
@@ -62,7 +62,11 @@ public class Copia extends Libro implements Serializable{
     	return (!(disponibleEvento && disponibleParticular));
     }
     
-    //public boolean estaAtrasado() {
-    	
-    //}
+    public String toString() {
+    	return this.getNombre();
+    }
+    
+    public String tipoRecurso() {
+    	return "Copia";
+    }
 }

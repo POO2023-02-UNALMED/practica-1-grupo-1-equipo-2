@@ -32,5 +32,13 @@ public abstract class Recurso implements Serializable{
     public void setIdRecurso(int idRecurso) {
         this.idRecurso = idRecurso;
     }
+    
+    public String tipoRecurso() {
+    	return "Recurso";
+    }
+    
+    public String toString() {
+    	return nombre;
+    }
 }
 
