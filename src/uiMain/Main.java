@@ -122,24 +122,21 @@ public class Main {
 	                    if (l.getNombre().equalsIgnoreCase(nombre)) {
 	                        encontrado = true;
 	                        System.out.println("Libro encontrado");
+	                        System.out.println("El libro: " + "'" + nombre + "'" + " Se encuentra disponible en las siguientes sedes: ");
 	                        for(Biblioteca m : sistema.getBibliotecas()) {
 	                        	for(Copia o : m.getCopias()) {
 	                        		if(o.getNombre().equalsIgnoreCase(nombre)){
 	                        			disponible = true;
-	        	                        System.out.println("El libro: " + "'" + l.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
 	        	                        //Si comprueba que existe ese libro, muestra las sedes que tengan al menos una copia del mismo
-	        	                        for (Biblioteca b : sistema.getBibliotecas()) { 
-	        	                            if (b.hayCopia(nombre, "Particular")) {
-	        	                                System.out.println(sistema.getBibliotecas().indexOf(b) + ". " + b.getSede());
-	        	                                sedes.add(b);
+	        	                            if (m.hayCopia(nombre, "Particular")) {
+	        	    	                		System.out.println(sistema.getBibliotecas().indexOf(m) + ". " + m.getSede());
+	        	                                sedes.add(m);
 	        	                            }
-	        	                        }
 	        	                        
+	        	                        break;
 	                        		}
-	                        		break;
 	                        	}
 	                        }
-	                        break;
 	                    }
 	                }
 	                
@@ -150,6 +147,7 @@ public class Main {
 	                }
 	                if(encontrado == true) {
 	                	if(disponible == true) {
+
 		                	System.out.println("Seleccione el indice de la sede de su preferencia para realizar el prestamo: ");
 		                	byte op = sc.nextByte();
 		                	copia = sistema.getBibliotecas().get(op).hallarcopiaPorNombre(nombre);
@@ -197,29 +195,24 @@ public class Main {
 	                boolean disponiblepc = false;
 	                ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>(); // Move this line outside the loop
 	                for (Computador l : sistema.getComputadores()) { 
-	                	encontradopc = false;
-		                disponiblepc = false;
 	                    if (l.getNombre().equalsIgnoreCase(nombre)) {
 	                        encontradopc = true;
 	                        System.out.println("Computador encontrado");
+	                        System.out.println("El computador: " + "'" + nombre + "'" + " Se encuentra disponible en las siguientes sedes: ");
 	                        for(Biblioteca m : sistema.getBibliotecas()) {
 	                        	for(PC o : m.getPCS()) {
 	                        		if(o.getNombre().equalsIgnoreCase(nombre)){
 	                        			disponiblepc = true;
-	        	                        System.out.println("El computador: " + "'" + l.getNombre() + "'" + " Se encuentra disponible en las siguientes sedes: ");
-	        	                        //Si comprueba que existe ese libro, muestra las sedes que tengan al menos una copia del mismo
-	        	                        for (Biblioteca b : sistema.getBibliotecas()) { 
-	        	                            if (b.hayPC(nombre, "Particular")) {
-	        	                                System.out.println(sistema.getBibliotecas().indexOf(b) + ". " + b.getSede());
-	        	                                sedes.add(b);
+	        	                        //Si comprueba que existe ese computador, muestra las sedes que tengan al menos un ejemplar del mismo
+	        	                            if (m.hayPC(nombre, "Particular")) {
+	        	    	                		System.out.println(sistema.getBibliotecas().indexOf(m) + ". " + m.getSede());
+	        	                                sedes.add(m);
 	        	                            }
-	        	                        }
-	        	                        //break;
+	        	                        
+	        	                        break;
 	                        		}
-	                        		break;
 	                        	}
 	                        }
-	                        break;
 	                    }
 	                }
 	                
@@ -248,7 +241,8 @@ public class Main {
 		                	Date fecha2 = new Date();
 
 		                	// Remueve la copia de la base de datos de la sede y realiza el prestamo a nombre del usuario
-		                	sistema.getBibliotecas().get(op).remover(pc);		                	Prestamo prestamo = new Prestamo(user,Prestamo.Tipo.PARTICULAR, fecha, fecha2, pc,sistema.getBibliotecas().get(op1));
+		                	sistema.getBibliotecas().get(op).remover(pc);
+		                	Prestamo prestamo = new Prestamo(user,Prestamo.Tipo.PARTICULAR, fecha, fecha2, pc,sistema.getBibliotecas().get(op1));
 		                	user.getPrestamos().add(prestamo);
 		                	System.out.println("¡El prestamo se ha realizado con exito!");
 		                	System.out.println("Por favor regresa tu computador ;)");
