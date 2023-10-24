@@ -77,7 +77,7 @@ public class Deserializador {
 			sis.setUser((Usuario) obin.readObject());
 			obin.close();
 		} catch (IOException | ClassNotFoundException e) {
-			System.out.println("Error en la deserializacion de autores");
+			System.out.println("Error en la deserializacion del usuario");
 		}
 	
 	}

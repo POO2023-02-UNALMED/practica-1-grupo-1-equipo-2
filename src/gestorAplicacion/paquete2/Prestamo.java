@@ -141,4 +141,8 @@ public class Prestamo implements Serializable{
         // Implementa la lógica para generar identificadores únicos de préstamo
         return 0; // Debes ajustar esto según tu implementación
     }
+    public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+    
 }

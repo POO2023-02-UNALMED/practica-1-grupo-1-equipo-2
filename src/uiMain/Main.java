@@ -16,7 +16,6 @@ public class Main {
 	static Scanner sc = new Scanner(System.in);
 	static Sistema sistema = new Sistema();
     static int numeroMultas = 0;  // Atributo estático para el número de multas
-    //static {System.out.println(sistema.getBibliotecas().get(0).listaCopiasUnicas());}
     
 	public static void main(String[] args) {
 		byte opcion;
@@ -27,7 +26,7 @@ public class Main {
 			
 			System.out.println("Bienvenido al sistema de biliotecas de nuestra institución");
 			System.out.println("----------------------------------------------------------");
-			System.out.println("Por favor, ingrese su usuario o si desea ingresar como invitado: ");
+			System.out.println("Por favor, seleccione una opción: ");
 			System.out.println("1. Ingresar como Administrador");
 			System.out.println("----------------------------------------------------------");
 			System.out.println("Por favor, seleccione la opción que desee ");
@@ -147,7 +146,6 @@ public class Main {
 		                	System.out.println("Seleccione el indice de la sede de su preferencia para realizar el prestamo: ");
 		                	byte op = sc.nextByte();
 		                	copia = sistema.getBibliotecas().get(op).hallarcopiaPorNombre(nombre);
-		                	// sistema.getBibliotecas().get(op).remover(copia);
 		                	System.out.println("Ingrese numericamente el dia hasta el cual desea hacer el prestamo: ");
 		                	int dia = sc.nextInt();
 		                	System.out.println("Ingrese numericamente el mes hasta el cual desea hacer el prestamo: ");
@@ -155,9 +153,8 @@ public class Main {
 		                	
 		                	// Fecha hasta la cual se hace el prestamo
 		                	Calendar calendar = Calendar.getInstance();
-		                	calendar.set(2023, mes - 1, dia); // Note: Month value is 0-based in java.util.Calendar.
+		                	calendar.set(2023, mes - 1, dia); 
 		                	Date fecha = calendar.getTime();
-		                	
 		                	// Fecha actual
 		                	Date fecha2 = new Date();
 
@@ -274,7 +271,6 @@ public class Main {
 		//caso agregar libro
 		case 0:
 			System.out.println("Para evitar temas de duplicados, por favor ingresa el codigo ISBN del libro que deseas agragar para comprobar que aun no se encuentra en nuestro sistema: ");
-			sc.nextLine();
 			String isbn = sc.nextLine();
 			//verifica si el libro a agregar ya existe en la base de datos, buscando por codigo isbn
 			for (Libro l : sistema.getLibros()) {
@@ -287,7 +283,6 @@ public class Main {
 			//si el libro no se encuentra, procede a pedir los datos para el registro
 			System.out.println("El libro no se encuentra en la base de datos de la biblioteca");
 			System.out.println("Ingrese el nombre del libro a registrar: ");
-			sc.nextLine();
 			nombre = sc.nextLine();
 			System.out.println("Ingrese el año de publicacion: ");
 			int año = sc.nextInt();
@@ -300,20 +295,17 @@ public class Main {
 			
 			if (op == 0) {
 				System.out.println("Ingrese el nombre del autor: ");
-				sc.nextLine();
 				String nombreAutor = sc.nextLine();
 				System.out.println("Ingrese la nacionalidad del autor: ");
-				sc.nextLine();
 				String nacionalidad = sc.nextLine();
 				System.out.println("Ingrese la corriente del autor: ");
-				sc.nextLine();
 				String corriente = sc.nextLine();
 				
 				autor = new Autor(nombreAutor, nacionalidad, corriente);
 				
 			}
 			else {
-				autor = sistema.getAutores().get(op);
+				autor = sistema.getAutores().get(op-1);
 			}
 			//Crea el nuevo libro con la informacion solicitada y agrega las copias
 			Libro libroNuevo = new Libro(nombre, sistema.getLibros().size(), isbn, autor, año);
@@ -349,6 +341,7 @@ public class Main {
 				}
 			}
 			sistema.getLibros().remove(aEliminar);
+			System.out.println("Libro eliminado con exito ");
 			break;
 		// Caso agregar computador
 		case 2:
@@ -364,10 +357,8 @@ public class Main {
 			}
 			// Si no existe, procede a solicitar informacion del nuevo computador
 			System.out.println("Ingrese la marca del computador a registrar: ");
-			sc.nextLine();
 			String marca = sc.nextLine();
 			System.out.println("Ingrese la gama del computador a registrar: ");
-			sc.nextLine();
 			String gama = sc.nextLine();
 			System.out.println("Seleccione el autor del libro: ");
 			
@@ -379,7 +370,7 @@ public class Main {
 				System.out.println(sistema.getBibliotecas().indexOf(b) + ". " + b.getNombre());
 			}
 			sede = sistema.getBibliotecas().get(sc.nextInt());
-			System.out.println("Cuantas copias de este libro deseas agregar");
+			System.out.println("Cuantos PCs de este modelo deseas agregar");
 			int num1 = sc.nextInt();
 			for (int i = 0; i <= num1; i++) {
 				sede.añadirPC(new PC(computadorNuevo, true, sede));
@@ -405,6 +396,7 @@ public class Main {
 				}
 			}
 			sistema.getComputadores().remove(aEliminar1);
+			System.out.println("Computador removido con éxito");
 			break;
 			
 		default :
@@ -421,8 +413,6 @@ public class Main {
 	private static void recursoEvento() {
 		Byte op;
 		Byte op2 = 0;
-		Date finicio;
-		Date ffinal;
 		Prestamo prestamo;
 		// Despliega lista de sedes para ver en cual se desea realizar el evento
 		System.out.println("Seleccione la sede en la cual se requiere hacer la reserva para evento: ");
@@ -497,7 +487,7 @@ public class Main {
 	        return;
 	    }
 
-	    System.out.println("Selecciona el préstamo que deseas devolver:");
+	    System.out.println("Selecciona el préstamo que deseas gestionar:");
 	    int i = 0;
 	    for (Prestamo prestamo : prestamosUsuario) {
 	        System.out.println(i+". Tipo: " + prestamo.getTipo().toString() + 
@@ -514,53 +504,90 @@ public class Main {
             }
 	        i++;
 	    }
+	    System.out.println(i + ". Volver al menu principal");
 
 	    int opcion = sc.nextInt();
 	    sc.nextLine(); // Consumir la nueva línea después del número
+	    
+	    if (opcion == i) {
+	    	return;
+	    }
 
-	    if (opcion < 0 || opcion > prestamosUsuario.size()) {
+	    else if (opcion < 0 || opcion > prestamosUsuario.size()) {
 	        System.out.println("Opción no válida. Debes seleccionar un número de préstamo válido.");
 	        return;
 	    }
 
 	    Prestamo prestamoSeleccionado = sistema.getUser().getPrestamos().get(opcion);
-
-	    // Realizar las acciones necesarias para marcar las Copias y PC como disponibles nuevamente
-	    ArrayList<Copia> copiasPrestadas = prestamoSeleccionado.getCopiasPrestadas();
-	    if(copiasPrestadas != null) {
-	    	for (Copia copia : copiasPrestadas) {
-		        copia.setDisponibleEvento(true); // Marcar la copia como disponible para eventos
-		        copia.setDisponibleParticular(true); // Marcar la copia como disponible para particulares
-		    }
-	    }
-
-	    ArrayList<PC> pcsPrestados = prestamoSeleccionado.getPcsPrestados();
-	    if(pcsPrestados != null) {
-		    for (PC pc : pcsPrestados) {
-		        pc.setDisponibleParticular(true); // Marcar la PC como disponible para particulares
-		        pc.setDisponibleEvento(true); // Marcar la copia como disponible para eventos
-		    }
-	    }
-
-	    // Eliminar el préstamo seleccionado de la lista de préstamos
-	    sistema.getUser().getPrestamos().remove(prestamoSeleccionado);
-
-	    // Calcular si el préstamo se ha devuelto antes de la fecha de vencimiento
+	    System.out.println("¿Desea regresar o extender su prestamo? \n0. Regresar \n1. Extender \n2. Volver al menu principal");
+	    byte op = sc.nextByte();
 	    Date fechaActual = new Date();
-	    if (fechaActual.before(prestamoSeleccionado.getFechaFin())) {
-	        // El préstamo se ha devuelto antes de la fecha de vencimiento, no hay multa
-	        System.out.println("¡Préstamo devuelto exitosamente antes de la fecha de vencimiento!");
-	    } else {
-	        // El préstamo se ha devuelto después de la fecha de vencimiento, generar multa
-	        int diasDeRetraso = calcularDiasDeRetraso(fechaActual, prestamoSeleccionado.getFechaFin());
-	        double valorMulta = calcularValorMulta(diasDeRetraso);
+	    switch (op) {
+	    case 0:
+	    	// Realizar las acciones necesarias para marcar las Copias y PC como disponibles nuevamente
+		    ArrayList<Copia> copiasPrestadas = prestamoSeleccionado.getCopiasPrestadas();
+		    if(copiasPrestadas != null) {
+		    	prestamoSeleccionado.getCopiasPrestadas().get(0).getUbicacion().getCopias().add(prestamoSeleccionado.getCopiasPrestadas().get(0));
+		    	for (Copia copia : copiasPrestadas) {
+			        copia.setDisponibleEvento(true); // Marcar la copia como disponible para eventos
+			        copia.setDisponibleParticular(true); // Marcar la copia como disponible para particulares
+			    }
+		    }
 
-	        // Crear una nueva multa y agregarla al usuario
-	        Multa multa = new Multa("Retraso en la devolución", new Date(), sistema.getUser());
-	        numeroMultas++;
-	        sistema.getUser().getMultas().add(multa);
+		    ArrayList<PC> pcsPrestados = prestamoSeleccionado.getPcsPrestados();
+		    if(pcsPrestados != null) {
+		    prestamoSeleccionado.getPcsPrestados().get(0).getSede().getPCS().add(prestamoSeleccionado.getPcsPrestados().get(0));
+			    for (PC pc : pcsPrestados) {
+			        pc.setDisponibleParticular(true); // Marcar la PC como disponible para particulares
+			        pc.setDisponibleEvento(true); // Marcar la copia como disponible para eventos
+			    }
+		    }
 
-	        System.out.println("¡Préstamo devuelto con retraso de " + diasDeRetraso + " días! Se ha generado una multa de $" + valorMulta);
+		    // Eliminar el préstamo seleccionado de la lista de préstamos
+		    sistema.getUser().getPrestamos().remove(prestamoSeleccionado);
+
+		    // Calcular si el préstamo se ha devuelto antes de la fecha de vencimiento
+		    if (fechaActual.before(prestamoSeleccionado.getFechaFin())) {
+		        // El préstamo se ha devuelto antes de la fecha de vencimiento, no hay multa
+		        System.out.println("¡Préstamo devuelto exitosamente antes de la fecha de vencimiento!");
+		    } else {
+		        // El préstamo se ha devuelto después de la fecha de vencimiento, generar multa
+		        int diasDeRetraso = calcularDiasDeRetraso(fechaActual, prestamoSeleccionado.getFechaFin());
+		        double valorMulta = calcularValorMulta(diasDeRetraso);
+
+		        // Crear una nueva multa y agregarla al usuario
+		        Multa multa = new Multa("Retraso en la devolución", new Date(), sistema.getUser());
+		        numeroMultas++;
+		        sistema.getUser().getMultas().add(multa);
+
+		        System.out.println("¡Préstamo devuelto con retraso de " + diasDeRetraso + " días! Se ha generado una multa de $" + valorMulta);
+		        
+	    }
+	    break;
+	    case 1:
+	    	if (fechaActual.before(prestamoSeleccionado.getFechaFin())) {
+	    		System.out.println("Ingrese numericamente el nuevo dia hasta el cual desea extender el prestamo: ");
+            	int dia = sc.nextInt();
+            	System.out.println("Ingrese numericamente el nuevo mes hasta el cual desea extender el prestamo: ");
+            	int mes = sc.nextInt();
+            	// Fecha hasta la cual se extiende el prestamo
+            	Calendar calendar = Calendar.getInstance();
+            	calendar.set(2023, mes - 1, dia); 
+            	Date fecha = calendar.getTime();
+	    		prestamoSeleccionado.setFechaFin(fecha);
+	    		System.out.println("Prestamo extendido con exito ");
+	    	} else {
+	    		Multa prueba = new Multa("Retraso en la devolución.", new Date(), sistema.getUser());
+				sistema.getUser().getMultas().add(prueba);
+	    		System.out.println("Lo lamento, tu prestamo ya caducó, no se puede hacer la extension");
+	    	}
+	    	break;
+	    case 2: 
+	    	break;
+	    default:
+	    System.out.println("Opcion no valida");
+	    	
+	    	
 	    }
 	}
 

@@ -1,5 +1,5 @@
 package gestorAplicacion.paquete2;
-import java.util.*;
+import java.util.*; 
 import gestorAplicacion.paquete1.*;
 
 import java.util.ArrayList;

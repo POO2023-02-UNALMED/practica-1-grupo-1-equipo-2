@@ -62,4 +62,7 @@ public class Autor implements Serializable{
     public void setObras(ArrayList<Libro> obras) {
         this.obras = obras;
     }
+    public String toString() {
+    	return nombre;
+    }
 }
