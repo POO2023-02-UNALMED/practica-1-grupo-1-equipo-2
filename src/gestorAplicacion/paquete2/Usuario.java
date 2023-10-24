@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 public class Usuario implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private static final int prestamosMaximos = 3;
+	public static final int prestamosMaximos = 3;
     private String nombre; // Nombre del usuario
     private String correo; // Correo electrónico del usuario
     private int cedula; // Número de cédula del usuario

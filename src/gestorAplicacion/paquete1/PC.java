@@ -2,6 +2,7 @@ package gestorAplicacion.paquete1;
 import java.io.Serializable;
 
 public class PC extends Computador implements Serializable{
+	private static final long serialVersionUID = 1L;
     private Computador modelo; // El modelo de computador al que pertenece esta PC
     private boolean disponibleEvento; // Indica si el pc está disponible para eventos
     private boolean disponibleParticular; // Indica si el pc está disponible para préstamos particulares

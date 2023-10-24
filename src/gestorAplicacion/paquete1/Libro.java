@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 public class Libro extends Recurso implements Serializable {
+	private static final long serialVersionUID = 1L;
 	static private int totalLibros;
     private String isbn;
     private Autor autor;

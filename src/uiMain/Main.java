@@ -19,6 +19,9 @@ public class Main {
 	static Usuario user = new Usuario("Usuario Prueba", "prueba@gmail.com", 1111, 0000);
     static int numeroMultas = 0;  // Atributo estático para el número de multas
 	
+	
+
+	
 	public static void main(String[] args) {
 		byte opcion;
 		byte op;
@@ -31,7 +34,7 @@ public class Main {
 			System.out.println("Por favor, ingrese su usuario o si desea ingresar como invitado: ");
 			System.out.println("1. Ingresar como Administrador");
 			System.out.println("----------------------------------------------------------");
-			System.out.println("Elije la opcion que quieras realizar");
+			System.out.println("Por favor, seleccione la opción que desee ");
 			opcion = sc.nextByte(); 
 			switch(opcion) {
 			case 1:
@@ -46,10 +49,10 @@ public class Main {
 		do {
 			System.out.println("Por favor seleccione la opcion que desee");
 			System.out.println("----------------------------------------------------------");
-			System.out.println("1. Consulta de disponibilidad de libro o computador");
-			System.out.println("2. Agregar libro o computador a la base de datos");
-			System.out.println("3. Consulta de disponibilidad y reserva de recursos para eventos");
-			System.out.println("4. Regresar computadores y/o libros en préstamo");
+			System.out.println("1. Consulta de disponibilidad para prestamo");
+			System.out.println("2. Consulta de disponibilidad para reserva de evento");
+			System.out.println("3. Gestion de base de datos");
+			System.out.println("4. Gestion de prestamos y reservas");
 			System.out.println("5. Gestión de Multas");
 			System.out.println("6. Salir del sistema");
 			System.out.println("----------------------------------------------------------");
@@ -85,11 +88,18 @@ public class Main {
 	 * Primera funcionalidad, encargada de buscar libros o computadores en una sede de la biblioteca
 	 * y realizar un prestamo a nombre del usuario
 	 */
-	/**
-	 * 
-	 */
+	
 	private static void pedirComputadorOLibro() {
 	    int op1;
+	    System.out.println("Comprobando historial de multas...");
+	    if (! user.getMultas().isEmpty() ) {
+	    	System.out.println("Lo lamento, debes pagar tus multas primero para realizar algún prestamo");
+	    	return ;
+	    }
+	    else if(user.getPrestamos().size() == Usuario.prestamosMaximos) {
+	    		System.out.println("Lo lamento, ya has solicitado el numero máximo de prestamos");
+	    		return ;
+	    }
 	    System.out.println("Ingresa el recurso del cual deseas consultar disponibilidad");
 	    System.out.println("0. Libro \n1. Computador \n2. Volver al menú principal. ");
 	    op1 = sc.nextByte();
@@ -124,8 +134,9 @@ public class Main {
 	        	                                sedes.add(b);
 	        	                            }
 	        	                        }
-	        	                        break;
+	        	                        
 	                        		}
+	                        		break;
 	                        	}
 	                        }
 	                        break;
@@ -148,7 +159,7 @@ public class Main {
 		                	System.out.println("Ingrese numericamente el mes hasta el cual desea hacer el prestamo: ");
 		                	int mes = sc.nextInt();
 		                	
-		                	// Fecha hhasta la cual se hace el prestamo
+		                	// Fecha hasta la cual se hace el prestamo
 		                	Calendar calendar = Calendar.getInstance();
 		                	calendar.set(2023, mes - 1, dia); // Note: Month value is 0-based in java.util.Calendar.
 		                	Date fecha = calendar.getTime();
@@ -158,13 +169,12 @@ public class Main {
 
 		                	// Remueve la copia de la base de datos de la sede y realiza el prestamo a nombre del usuario
 		                	
-		                	System.out.println(sistema.getBibliotecas().get(op1).getCopias());
+		                	//System.out.println(sistema.getBibliotecas().get(op1).getCopias());
 		                	Prestamo prestamo = new Prestamo(user,Prestamo.Tipo.PARTICULAR, fecha, fecha2, copia,sistema.getBibliotecas().get(op1));
 		                	user.getPrestamos().add(prestamo);
+		                	sistema.getBibliotecas().get(op).remover(copia);
 		                	System.out.println("¡El prestamo se ha realizado con exito!");
-		                	System.out.println("Por favor regresa tu libro ;)");
-		                	System.out.println(sistema.getBibliotecas().get(op1).getCopias());
-	                	}
+		                	System.out.println("Por favor regresa tu libro ;)");	                	}
 	                	else if(disponible == false) {
 	                		System.out.println("El libro no cuenta con copias en este momento.");
 	                	}
@@ -187,6 +197,8 @@ public class Main {
 	                boolean disponiblepc = false;
 	                ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>(); // Move this line outside the loop
 	                for (Computador l : sistema.getComputadores()) { 
+	                	encontradopc = false;
+		                disponiblepc = false;
 	                    if (l.getNombre().equalsIgnoreCase(nombre)) {
 	                        encontradopc = true;
 	                        System.out.println("Computador encontrado");
@@ -202,8 +214,9 @@ public class Main {
 	        	                                sedes.add(b);
 	        	                            }
 	        	                        }
-	        	                        break;
+	        	                        //break;
 	                        		}
+	                        		break;
 	                        	}
 	                        }
 	                        break;
@@ -235,16 +248,13 @@ public class Main {
 		                	Date fecha2 = new Date();
 
 		                	// Remueve la copia de la base de datos de la sede y realiza el prestamo a nombre del usuario
-		                	
-		                	System.out.println(sistema.getBibliotecas().get(op1).getCopias());
-		                	Prestamo prestamo = new Prestamo(user,Prestamo.Tipo.PARTICULAR, fecha, fecha2, pc,sistema.getBibliotecas().get(op1));
+		                	sistema.getBibliotecas().get(op).remover(pc);		                	Prestamo prestamo = new Prestamo(user,Prestamo.Tipo.PARTICULAR, fecha, fecha2, pc,sistema.getBibliotecas().get(op1));
 		                	user.getPrestamos().add(prestamo);
 		                	System.out.println("¡El prestamo se ha realizado con exito!");
 		                	System.out.println("Por favor regresa tu computador ;)");
-		                	System.out.println(sistema.getBibliotecas().get(op1).getCopias());
 	                	}
 	                	else if(disponiblepc == false) {
-	                		System.out.println("El libro no cuenta con copias en este momento.");
+	                		System.out.println("El computador no cuenta con disponibilidad en este momento.");
 	                	}
 	                }
 	            }

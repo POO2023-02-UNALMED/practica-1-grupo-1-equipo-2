@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 public class Computador extends Recurso implements Serializable{
+	private static final long serialVersionUID = 1L;
 	static private int totalPCs;
     private String marca;
     private String gama;
     private ArrayList<PC> pcs;
+    
 
     // Constructor de la clase Computador
     public Computador(String nombre, int idRecurso, String marca, String gama) {
