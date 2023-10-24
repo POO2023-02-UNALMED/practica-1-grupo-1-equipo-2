@@ -332,6 +332,13 @@ public class Main {
 			}
 			// Elimina el libro solicitado de toda base de datos
 			Libro aEliminar = sistema.getLibros().get(sc.nextInt());
+			for (Prestamo p: sistema.getUser().getPrestamos()) {
+				if (p.getCopiasPrestadas() != null && aEliminar.getNombre().equalsIgnoreCase(p.getCopiasPrestadas().get(0).getNombre())) {
+					System.out.println("No puedes eliminar este recurso ya que se encuentra en prestamo");
+					return ;
+				}
+			}
+			
 			for(Biblioteca s : sistema.getBibliotecas()) {
 				for(Copia copia : s.getCopias()) {
 					if (copia.getNombre().equalsIgnoreCase(aEliminar.getNombre()) && s.getCopias().contains(aEliminar)) {
@@ -387,6 +394,13 @@ public class Main {
 			}
 			// Elimina computador de toda base de datos
 			Computador aEliminar1 = sistema.getComputadores().get(sc.nextInt());
+			for (Prestamo p: sistema.getUser().getPrestamos()) {
+				if (p.getPcsPrestados() != null && aEliminar1.getNombre().equalsIgnoreCase(p.getPcsPrestados().get(0).getNombre())) {
+					System.out.println("No puedes eliminar este recurso ya que se encuentra en prestamo");
+					return ;
+				}
+			}
+			
 			for(Biblioteca s : sistema.getBibliotecas()) {
 				for(PC pc : s.getPCS()) {
 					if (pc.getNombre().equalsIgnoreCase(aEliminar1.getNombre()) && s.getPCS().contains(aEliminar1)) {
