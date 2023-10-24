@@ -54,6 +54,14 @@ public class Computador extends Recurso implements Serializable{
     public void setPcs(ArrayList<PC> pcs) {
         this.pcs = pcs;
     }
+    
+    public String tipoRecurso() {
+    	return "Computador";
+    }
+    
+    public String toString() {
+    	return this.getNombre();
+    }
 }
 
 

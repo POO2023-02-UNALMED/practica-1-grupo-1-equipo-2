@@ -1,7 +1,7 @@
 package gestorAplicacion.paquete1;
 import java.io.Serializable;
 
-public class PC extends Computador implements Serializable{
+public class PC extends Computador implements Serializable, Prestable{
 	private static final long serialVersionUID = 1L;
     private Computador modelo; // El modelo de computador al que pertenece esta PC
     private boolean disponibleEvento; // Indica si el pc está disponible para eventos
@@ -57,4 +57,17 @@ public class PC extends Computador implements Serializable{
     public void setSede(Biblioteca sede) {
         this.sede = sede;
     }
+    
+    public boolean isPrestado() {
+    	return (!(disponibleEvento && disponibleParticular));
+    }
+    
+    public int getID() {
+    	return this.getIdRecurso();
+    }
+    
+    public String tipoRecurso() {
+    	return "Pc";
+    }
+    
 }
