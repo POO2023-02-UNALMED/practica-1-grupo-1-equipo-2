@@ -556,7 +556,7 @@ public class Main {
 	        double valorMulta = calcularValorMulta(diasDeRetraso);
 
 	        // Crear una nueva multa y agregarla al usuario
-	        Multa multa = new Multa(numeroMultas,"Retraso en la devolución", new Date(), sistema.getUser());
+	        Multa multa = new Multa("Retraso en la devolución", new Date(), sistema.getUser());
 	        numeroMultas++;
 	        sistema.getUser().getMultas().add(multa);
 
@@ -581,9 +581,9 @@ public class Main {
 	public static void gestionMultas() {
 
 	    List<Multa> multasPendientes = sistema.getUser().getMultas();
-		if(user.getMultas().isEmpty()) {
-			Multa prueba = new Multa("Retraso en la devolución.", new Date(), user);
-			user.getMultas().add(prueba);
+		if(sistema.getUser().getMultas().isEmpty()) {
+			Multa prueba = new Multa("Retraso en la devolución.", new Date(), sistema.getUser());
+			sistema.getUser().getMultas().add(prueba);
 		} else {
 	        System.out.println("Multas pendientes:");
 	        for (Multa multa : multasPendientes) {
@@ -598,7 +598,7 @@ public class Main {
 		    Multa multaAPagar = null;
 		    List<Multa> multasPendientes1 = sistema.getUser().getMultas();
 		    for (Multa multa : multasPendientes1) {
-		        if (multa.getIdMulta() == idMultaAPagar) {
+		    	if (multa.getIdMulta() == MultaAPagar) {
 		            multaAPagar = multa;
 		            break;
 		        }
