@@ -8,7 +8,6 @@ public class Computador extends Recurso implements Serializable{
 	static private int totalPCs;
     private String marca;
     private String gama;
-    private ArrayList<PC> pcs;
     
 
     // Constructor de la clase Computador
@@ -16,7 +15,6 @@ public class Computador extends Recurso implements Serializable{
         super(nombre, idRecurso); // Llama al constructor de la clase base (Recurso)
         this.marca = marca;
         this.gama = gama;
-        this.pcs = new ArrayList<>();
         totalPCs++;
     }
     
@@ -44,15 +42,6 @@ public class Computador extends Recurso implements Serializable{
 
     public void setGama(String gama) {
         this.gama = gama;
-    }
-
-    // Métodos para obtener y establecer la lista de computadoras individuales (PCs)
-    public ArrayList<PC> getPcs() {
-        return pcs;
-    }
-
-    public void setPcs(ArrayList<PC> pcs) {
-        this.pcs = pcs;
     }
     
     public String tipoRecurso() {

@@ -10,7 +10,6 @@ public class Libro extends Recurso implements Serializable {
     protected String isbn;
     protected Autor autor;
     protected int año;
-    private ArrayList<Copia> copias;
 
     // Constructor de la clase Libro
     public Libro(String nombre, int idRecurso, String isbn, Autor autor, int año) {
@@ -18,7 +17,6 @@ public class Libro extends Recurso implements Serializable {
         this.isbn = isbn;
         this.autor = autor;
         this.año = año;
-        this.copias = new ArrayList<>();
         autor.getObras().add(this);
         totalLibros++;
     }
@@ -60,16 +58,6 @@ public class Libro extends Recurso implements Serializable {
     // Métodos para establecer el año de publicación del libro
     public void setAño(int año) {
         this.año = año;
-    }
-
-    // Métodos para obtener la lista de copias del libro
-    public ArrayList<Copia> getCopias() {
-        return copias;
-    }
-
-    // Métodos para establecer la lista de copias del libro
-    public void setCopias(ArrayList<Copia> copias) {
-        this.copias = copias;
     }
     
     public String tipoRecurso() {
