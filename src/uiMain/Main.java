@@ -1,10 +1,7 @@
 package uiMain;
 import gestorAplicacion.paquete1.*;
 import gestorAplicacion.paquete2.*;
-
-import baseDatos.Deserializador;
 import baseDatos.Serializador;
-
 import java.util.*;
 
 /**
@@ -16,6 +13,11 @@ public class Main {
 	static Scanner sc = new Scanner(System.in);
 	static Sistema sistema = new Sistema();
     static int numeroMultas = 0;  // Atributo estático para el número de multas
+    
+    //Agregar multa y prestamos de prueba
+    //static { sistema.getUser().getMultas().add(new Multa("Regresar tarde", new Date(12,12,2023), sistema.getUser())); } 
+    //static { sistema.getUser().getPrestamos().add(new Prestamo(sistema.getUser(), Prestamo.Tipo.PARTICULAR,new Date(), new Date(12,12,2023),sistema.getBibliotecas().get(0).getCopias().get(0),sistema.getBibliotecas().get(0))); } 
+   
     
 	public static void main(String[] args) {
 		byte opcion;
@@ -102,7 +104,7 @@ public class Main {
 	        //caso libro
 	        case 0:
 	            while(true) {
-	                System.out.println("Ingrese el nombre del libro que desees consultar o ingrese 0 para volver al menú anterior");
+	                System.out.println("Ingrese el nombre del libro que desees consultar o ingrese 0 para volver al menú anterior: ");
 	                sc.nextLine();
 	                String nombre = sc.nextLine();
 	                if(nombre.equals("0")) {
@@ -112,7 +114,7 @@ public class Main {
 	              //Busca en la base de datos de libros si existe un libro con ese nombre, no importa la sede
 	                boolean encontrado = false;
 	                boolean disponible = false;
-	                ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>(); // Move this line outside the loop
+	                ArrayList<Biblioteca> sedes = new ArrayList<Biblioteca>(); 
 	                for (Libro l : sistema.getLibros()) { 
 	                    if (l.getNombre().equalsIgnoreCase(nombre)) {
 	                        encontrado = true;
