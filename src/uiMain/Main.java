@@ -18,9 +18,8 @@ public class Main {
 	static Sistema sistema = new Sistema();
 	static Usuario user = new Usuario("Usuario Prueba", "prueba@gmail.com", 1111, 0000);
     static int numeroMultas = 0;  // Atributo estático para el número de multas
-	
-	
-
+	static { System.out.println(sistema.getLibros());}
+    
 	
 	public static void main(String[] args) {
 		byte opcion;
