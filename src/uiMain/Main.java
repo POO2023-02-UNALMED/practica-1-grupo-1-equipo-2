@@ -462,7 +462,8 @@ public class Main {
 			prestamo = new Prestamo(user,Prestamo.Tipo.EVENTO,evento.getSala(),finicio,ffinal,sede.getCopias().get(op2), sede);
 			sede.getPrestamos().add(prestamo);
 			System.out.println("Reserva realizada con exito en sala: " + prestamo.getSala() + " con el siguiente material: ");
-			prestamo.getCopiasPrestadas();
+			prestamo.getCopiasPrestadas().toString();
+			break;
 		// Caso computador
 		case 1:
 			// Despliega lista de pcs disponibles en esa sede para el evento
@@ -478,7 +479,8 @@ public class Main {
 			prestamo = new Prestamo(user,Prestamo.Tipo.EVENTO,evento.getSala(),finicio,ffinal,sede.getPCS().get(op2), sede);
 			sede.getPrestamos().add(prestamo);
 			System.out.println("Reserva realizada con exito en sala: " + prestamo.getSala() + " con el siguiente material: ");
-			prestamo.getPcsPrestados();
+			prestamo.getPcsPrestados().toString();
+			break;
 		default:
 			System.out.println("Material incorrecto");
 		}
