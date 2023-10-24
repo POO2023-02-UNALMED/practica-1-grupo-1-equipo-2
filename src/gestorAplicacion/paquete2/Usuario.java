@@ -125,25 +125,23 @@ public class Usuario implements Serializable{
         Date fechaActual = new Date();
 
         // Recorrer la lista de préstamos
-        for (int i = 0; i < prestamos.size(); i++) {
-            Prestamo prestamo = prestamos.get(i);
+        for(Prestamo prestamo : prestamos) {
 
             if (prestamo.getFechaFin().after(fechaActual)) {
                 // El préstamo todavía está vigente
-                String detallesPrestamo = "Tipo: " + prestamo.getTipo() + 
+                String detallesPrestamo = "Tipo: " + prestamo.getTipo().toString() + 
                                           ", Fecha de Inicio: " + prestamo.getFechaInicio() + 
                                           ", Fecha de Fin: " + prestamo.getFechaFin() +
+                                          ", Sede: " + prestamo.getSede().getNombre() +
                                           ", Items Prestados: ";
 
                 // Agregar detalles de copias prestadas
-                for (int j = 0; j < prestamo.getCopiasPrestadas().size(); j++) {
-                    Copia copia = prestamo.getCopiasPrestadas().get(j);
+                for (Copia copia : prestamo.getCopiasPrestadas()) {
                     detallesPrestamo += "Copia de " + copia.getCopiaDe().getNombre() + ", ";
                 }
 
                 // Agregar detalles de PCs prestadas
-                for (int j = 0; j < prestamo.getPcsPrestados().size(); j++) {
-                    PC pc = prestamo.getPcsPrestados().get(j);
+                for (PC pc : prestamo.getPcsPrestados()) {
                     detallesPrestamo += "PC " + pc.getModelo().getMarca() + ", ";
                 }
 

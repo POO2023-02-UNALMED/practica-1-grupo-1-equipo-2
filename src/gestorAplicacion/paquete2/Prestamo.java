@@ -14,6 +14,7 @@ public class Prestamo implements Serializable{
     private Date fechaFin; // Fecha de finalización del préstamo
     private ArrayList<Copia> copiasPrestadas; // Copias prestadas en el préstamo
     private ArrayList<PC> pcsPrestados; // Computadoras prestadas en el préstamo
+    private Biblioteca sede;
 
     // Constructor de prestamo de evento con libro
     public Prestamo(Usuario usuario, Tipo tipo, Sala sala, Date fechaInicio, Date fechaFin, Copia copia, Biblioteca sede) {
@@ -26,6 +27,7 @@ public class Prestamo implements Serializable{
         this.idPrestamo = generarIdentificadorUnico();
         copiasPrestadas = new ArrayList<Copia>();
         copiasPrestadas.add(copia);
+        
         sede.getCopias().remove(copia);
         sede.getSalas().remove(sala);
     }
@@ -35,6 +37,7 @@ public class Prestamo implements Serializable{
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.sala = sala;
+        this.sede = sede;
         // Generar un identificador único para el préstamo (puedes implementar esta lógica)
         this.idPrestamo = generarIdentificadorUnico();
         pcsPrestados = new ArrayList<PC>();
@@ -49,6 +52,7 @@ public class Prestamo implements Serializable{
         this.usuario = usuario;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.sede = sede;
         // Generar un identificador único para el préstamo (puedes implementar esta lógica)
         this.idPrestamo = generarIdentificadorUnico();
         sede.getCopias().remove(copia);
@@ -60,6 +64,7 @@ public class Prestamo implements Serializable{
         this.usuario = usuario;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.sede = sede;
         // Generar un identificador único para el préstamo (puedes implementar esta lógica)
         this.idPrestamo = generarIdentificadorUnico();
         sede.getPCS().remove(pc);
@@ -67,6 +72,10 @@ public class Prestamo implements Serializable{
     
     public enum Tipo {
     	EVENTO, PARTICULAR
+    }
+    
+    public Biblioteca getSede() {
+    	return sede;
     }
     
     // Método para obtener el identificador único del préstamo

@@ -168,7 +168,7 @@ public class Main {
 		                	// Remueve la copia de la base de datos de la sede y realiza el prestamo a nombre del usuario
 		                	
 		                	//System.out.println(sistema.getBibliotecas().get(op1).getCopias());
-		                	Prestamo prestamo = new Prestamo(user,Prestamo.Tipo.PARTICULAR, fecha, fecha2, copia,sistema.getBibliotecas().get(op1));
+		                	Prestamo prestamo = new Prestamo(user,Prestamo.Tipo.PARTICULAR, fecha2, fecha, copia,sistema.getBibliotecas().get(op1));
 		                	user.getPrestamos().add(prestamo);
 		                	sistema.getBibliotecas().get(op).remover(copia);
 		                	System.out.println("¡El prestamo se ha realizado con exito!");
@@ -242,7 +242,7 @@ public class Main {
 
 		                	// Remueve la copia de la base de datos de la sede y realiza el prestamo a nombre del usuario
 		                	sistema.getBibliotecas().get(op).remover(pc);
-		                	Prestamo prestamo = new Prestamo(user,Prestamo.Tipo.PARTICULAR, fecha, fecha2, pc,sistema.getBibliotecas().get(op1));
+		                	Prestamo prestamo = new Prestamo(user,Prestamo.Tipo.PARTICULAR, fecha2, fecha, pc,sistema.getBibliotecas().get(op1));
 		                	user.getPrestamos().add(prestamo);
 		                	System.out.println("¡El prestamo se ha realizado con exito!");
 		                	System.out.println("Por favor regresa tu computador ;)");
@@ -491,15 +491,22 @@ public class Main {
 	// Método para devolver un préstamo específico
 	private static void regresarPrestamo() {
 	    // Mostrar los préstamos vigentes para que el usuario elija cuál devolver
+		ArrayList<Prestamo> prestamosUsuario = user.getPrestamos();
 	    ArrayList<String> prestamosDetallados = user.obtenerPrestamosVigentesConDetalles();
-	    if (prestamosDetallados.isEmpty()) {
+	    if (prestamosUsuario.isEmpty()) {
 	        System.out.println("No tienes préstamos vigentes para devolver.");
 	        return;
 	    }
 
 	    System.out.println("Selecciona el préstamo que deseas devolver:");
-	    for (int i = 0; i < prestamosDetallados.size(); i++) {
-	        System.out.println(i + 1 + ". " + prestamosDetallados.get(i));
+	    int i = 0;
+	    for (Prestamo prestamo : prestamosUsuario) {
+	        System.out.println(i+". Tipo: " + prestamo.getTipo().toString() + 
+                    ", Fecha de Inicio: " + prestamo.getFechaInicio() + 
+                    ", Fecha de Fin: " + prestamo.getFechaFin() +
+                    ", Sede: " + prestamo.getSede().getNombre() +
+                    ", Items Prestados: " + "Copias: "+prestamo.getCopiasPrestadas() + prestamo.getPcsPrestados());
+	        i++;
 	    }
 
 	    int opcion = sc.nextInt();
