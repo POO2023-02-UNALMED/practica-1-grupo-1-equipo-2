@@ -118,9 +118,9 @@ public class Biblioteca implements Serializable{
         boolean estado = false;
         for (Copia copia : copias) {
         	// Verificar la disponibilidad según el propósito
-        	if (copia.getNombre().equals(nombreLibro) && proposito.equals("Evento") && copia.isDisponibleEvento()) {
+        	if (copia.getNombre().equalsIgnoreCase(nombreLibro) && proposito.equals("Evento") && copia.isDisponibleEvento()) {
         		estado=true; // Hay una copia disponible para eventos
-        	} else if (copia.getNombre().equals(nombreLibro) && proposito.equals("Particular") && copia.isDisponibleParticular()) {
+        	} else if (copia.getNombre().equalsIgnoreCase(nombreLibro) && proposito.equals("Particular") && copia.isDisponibleParticular()) {
         		estado=true; // Hay una copia disponible para préstamos particulares
         	}
         }
@@ -132,9 +132,9 @@ public class Biblioteca implements Serializable{
         boolean estado = false;
         for (PC pc : pcs) {
         	// Verificar la disponibilidad según el propósito
-        	if (pc.getNombre().equals(nombreComputador) && proposito.equals("Evento") && pc.isDisponibleEvento()) {
+        	if (pc.getNombre().equalsIgnoreCase(nombreComputador) && proposito.equals("Evento") && pc.isDisponibleEvento()) {
         		estado=true; // Hay una copia disponible para eventos
-        	} else if (pc.getNombre().equals(nombreComputador) && proposito.equals("Particular") && pc.isDisponibleParticular()) {
+        	} else if (pc.getNombre().equalsIgnoreCase(nombreComputador) && proposito.equals("Particular") && pc.isDisponibleParticular()) {
         		estado=true; // Hay una copia disponible para préstamos particulares
         	}
         }

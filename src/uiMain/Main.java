@@ -63,10 +63,10 @@ public class Main {
 				pedirComputadorOLibro();
 				break;
 			case 2:
-				AgregarOEliminar();
+				recursoEvento();
 				break;
 			case 3:
-				recursoEvento();
+				AgregarOEliminar();
 				break;
 			case 4:
 				regresarPrestamo();
