@@ -14,6 +14,7 @@ public class Serializador {
 	    	serializarLibros(sis,new File("src\\baseDatos\\temp\\Libros.txt"));
 	    	serializarComputadores(sis,new File("src\\baseDatos\\temp\\Computadores.txt"));
 	    	serializarAutores(sis,new File("src\\baseDatos\\temp\\Autores.txt"));
+	    	serializarUsuario(sis, new File("src\\baseDatos\\temp\\Usuario.txt"));
 	    }
 	  
 	  public static void serializarBibliotecas(Sistema sis, File ruta) {
@@ -70,6 +71,19 @@ public class Serializador {
 			  
 		  }
 		  
+	  }
+	  
+	  public static void serializarUsuario(Sistema sis, File ruta) {
+		  try {
+			  FileOutputStream file = new FileOutputStream(ruta);
+	            ObjectOutputStream out = new ObjectOutputStream(file);
+	            out.writeObject(sis.getUser());
+	            out.close();
+	            file.close();
+		  } catch (IOException e){
+			  System.out.println("Error en la serializacion");
+			  
+		  }
 	  }
 	  
 	  

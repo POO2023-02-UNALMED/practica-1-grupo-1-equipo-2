@@ -1,7 +1,6 @@
 package uiMain;
 import gestorAplicacion.paquete1.*;
 import gestorAplicacion.paquete2.*;
-import java.util.Scanner;
 
 import baseDatos.Deserializador;
 import baseDatos.Serializador;
@@ -16,11 +15,9 @@ import java.util.*;
 public class Main {
 	static Scanner sc = new Scanner(System.in);
 	static Sistema sistema = new Sistema();
-	static Usuario user = new Usuario("Usuario Prueba", "prueba@gmail.com", 1111, 0000);
     static int numeroMultas = 0;  // Atributo estático para el número de multas
-	static { System.out.println(sistema.getLibros());}
+    //static {System.out.println(sistema.getBibliotecas().get(0).listaCopiasUnicas());}
     
-	
 	public static void main(String[] args) {
 		byte opcion;
 		byte op;
@@ -91,11 +88,11 @@ public class Main {
 	private static void pedirComputadorOLibro() {
 	    int op1;
 	    System.out.println("Comprobando historial de multas...");
-	    if (! user.getMultas().isEmpty() ) {
+	    if (! sistema.getUser().getMultas().isEmpty() ) {
 	    	System.out.println("Lo lamento, debes pagar tus multas primero para realizar algún prestamo");
 	    	return ;
 	    }
-	    else if(user.getPrestamos().size() == Usuario.prestamosMaximos) {
+	    else if(sistema.getUser().getPrestamos().size() == Usuario.prestamosMaximos) {
 	    		System.out.println("Lo lamento, ya has solicitado el numero máximo de prestamos");
 	    		return ;
 	    }
@@ -167,8 +164,8 @@ public class Main {
 		                	// Remueve la copia de la base de datos de la sede y realiza el prestamo a nombre del usuario
 		                	
 		                	//System.out.println(sistema.getBibliotecas().get(op1).getCopias());
-		                	Prestamo prestamo = new Prestamo(user,Prestamo.Tipo.PARTICULAR, fecha2, fecha, copia,sistema.getBibliotecas().get(op1));
-		                	user.getPrestamos().add(prestamo);
+		                	Prestamo prestamo = new Prestamo(sistema.getUser(),Prestamo.Tipo.PARTICULAR, fecha2, fecha, copia,sistema.getBibliotecas().get(op1));
+		                	sistema.getUser().getPrestamos().add(prestamo);
 		                	sistema.getBibliotecas().get(op).remover(copia);
 		                	System.out.println("¡El prestamo se ha realizado con exito!");
 		                	System.out.println("Por favor regresa tu libro ;)");	                	}
@@ -241,8 +238,8 @@ public class Main {
 
 		                	// Remueve la copia de la base de datos de la sede y realiza el prestamo a nombre del usuario
 		                	sistema.getBibliotecas().get(op).remover(pc);
-		                	Prestamo prestamo = new Prestamo(user,Prestamo.Tipo.PARTICULAR, fecha2, fecha, pc,sistema.getBibliotecas().get(op1));
-		                	user.getPrestamos().add(prestamo);
+		                	Prestamo prestamo = new Prestamo(sistema.getUser(),Prestamo.Tipo.PARTICULAR, fecha2, fecha, pc,sistema.getBibliotecas().get(op1));
+		                	sistema.getUser().getPrestamos().add(prestamo);
 		                	System.out.println("¡El prestamo se ha realizado con exito!");
 		                	System.out.println("Por favor regresa tu computador ;)");
 	                	}
@@ -437,6 +434,10 @@ public class Main {
 		System.out.println("Seleccione que tipo de evento desea reservar: ");
 		System.out.println("0. Charla\n1. Presentacion\n2. Estudio");
 		op = sc.nextByte();
+		if (sede.getSalas().isEmpty()) {
+			System.out.println("No hay salas disponibles para realizar un evento ");
+			return ;
+		}
 		System.out.println("Seleccione la sala que desea reservar: ");
 		for (int i = 0; i < sede.getSalas().size(); i++) {
 			System.out.println(i + ". " + sede.getSalas().get(i).getNombre() + " / Con capacidad para: " + sede.getSalas().get(i).getCapacidad() + " personas" );
@@ -451,35 +452,33 @@ public class Main {
 		case 0:
 			// Despliega lista de copias disponibles en esa sede para el evento
 			System.out.println("Lista de libros disponibles para reserva de evento: ");
-			for (int i = 0; i < sede.getCopias().size(); i++) {
-				System.out.println(i + ". " + sede.getCopias().get(i).getNombre());
+			for (int i = 0; i < sede.listaCopiasUnicas().size(); i++) {
+				System.out.println(i + ". " + sede.listaCopiasUnicas().get(i).getNombre());
 			}
 			// Se selecciona el libro y se genera el prestamo a nombre del usuario
 			System.out.println("Por favor seleccione el libro a reservar para evento: ");
 			op2 = sc.nextByte();
-			finicio = new Date();
-			ffinal = new Date(2023,12,12);
-			prestamo = new Prestamo(user,Prestamo.Tipo.EVENTO,evento.getSala(),finicio,ffinal,sede.getCopias().get(op2), sede);
+			Date fecha = new Date();
+			prestamo = new Prestamo(sistema.getUser(),Prestamo.Tipo.EVENTO,evento.getSala(),fecha,fecha,sede.listaCopiasUnicas().get(op2), sede);
 			sede.getPrestamos().add(prestamo);
 			System.out.println("Reserva realizada con exito en sala: " + prestamo.getSala() + " con el siguiente material: ");
-			prestamo.getCopiasPrestadas().toString();
+			System.out.println(prestamo.getCopiasPrestadas());
 			break;
 		// Caso computador
 		case 1:
 			// Despliega lista de pcs disponibles en esa sede para el evento
 			System.out.println("Lista de computadores disponibles para evento: ");
-			for (int i = 0; i < sede.getPCS().size(); i++) {
-				System.out.println(i + ". " + sede.getPCS().get(i).getNombre());
+			for (int i = 0; i < sede.listaPcsUnicos().size(); i++) {
+				System.out.println(i + ". " + sede.listaPcsUnicos().get(i).getNombre());
 			}
 			// Se selecciona el computador y se genera el prestamo a nombre del usuario
 			System.out.println("Por favor seleccione el computador a reservar para evento: ");
 			op2 = sc.nextByte();
-			finicio = new Date();
-			ffinal = new Date(2023,12,12);
-			prestamo = new Prestamo(user,Prestamo.Tipo.EVENTO,evento.getSala(),finicio,ffinal,sede.getPCS().get(op2), sede);
+			fecha = new Date();
+			prestamo = new Prestamo(sistema.getUser(),Prestamo.Tipo.EVENTO,evento.getSala(),fecha,fecha,sede.listaPcsUnicos().get(op2), sede);
 			sede.getPrestamos().add(prestamo);
 			System.out.println("Reserva realizada con exito en sala: " + prestamo.getSala() + " con el siguiente material: ");
-			prestamo.getPcsPrestados().toString();
+			System.out.println(prestamo.getPcsPrestados());
 			break;
 		default:
 			System.out.println("Material incorrecto");
@@ -492,7 +491,7 @@ public class Main {
 	// Método para devolver un préstamo específico
 	private static void regresarPrestamo() {
 	    // Mostrar los préstamos vigentes para que el usuario elija cuál devolver
-		ArrayList<Prestamo> prestamosUsuario = user.getPrestamos();
+		ArrayList<Prestamo> prestamosUsuario = sistema.getUser().getPrestamos();
 	    if (prestamosUsuario.isEmpty()) {
 	        System.out.println("No tienes préstamos vigentes para devolver.");
 	        return;
@@ -524,7 +523,7 @@ public class Main {
 	        return;
 	    }
 
-	    Prestamo prestamoSeleccionado = user.getPrestamos().get(opcion);
+	    Prestamo prestamoSeleccionado = sistema.getUser().getPrestamos().get(opcion);
 
 	    // Realizar las acciones necesarias para marcar las Copias y PC como disponibles nuevamente
 	    ArrayList<Copia> copiasPrestadas = prestamoSeleccionado.getCopiasPrestadas();
@@ -544,7 +543,7 @@ public class Main {
 	    }
 
 	    // Eliminar el préstamo seleccionado de la lista de préstamos
-	    user.getPrestamos().remove(prestamoSeleccionado);
+	    sistema.getUser().getPrestamos().remove(prestamoSeleccionado);
 
 	    // Calcular si el préstamo se ha devuelto antes de la fecha de vencimiento
 	    Date fechaActual = new Date();
@@ -557,9 +556,9 @@ public class Main {
 	        double valorMulta = calcularValorMulta(diasDeRetraso);
 
 	        // Crear una nueva multa y agregarla al usuario
-	        Multa multa = new Multa(numeroMultas,"Retraso en la devolución", new Date(), user);
+	        Multa multa = new Multa(numeroMultas,"Retraso en la devolución", new Date(), sistema.getUser());
 	        numeroMultas++;
-	        user.getMultas().add(multa);
+	        sistema.getUser().getMultas().add(multa);
 
 	        System.out.println("¡Préstamo devuelto con retraso de " + diasDeRetraso + " días! Se ha generado una multa de $" + valorMulta);
 	    }
@@ -580,7 +579,7 @@ public class Main {
 	}
 
 	public static void gestionMultas() {
-	    List<Multa> multasPendientes = user.getMultas();
+	    List<Multa> multasPendientes = sistema.getUser().getMultas();
 
 	    if (multasPendientes.isEmpty()) {
 	        System.out.println("No tienes multas pendientes.");
@@ -596,7 +595,7 @@ public class Main {
 
 		    // Busca la multa en la lista de multas del usuario
 		    Multa multaAPagar = null;
-		    List<Multa> multasPendientes1 = user.getMultas();
+		    List<Multa> multasPendientes1 = sistema.getUser().getMultas();
 		    for (Multa multa : multasPendientes1) {
 		        if (multa.getIdMulta() == idMultaAPagar) {
 		            multaAPagar = multa;

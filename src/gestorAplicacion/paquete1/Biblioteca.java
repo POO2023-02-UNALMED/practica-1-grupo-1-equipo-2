@@ -1,5 +1,9 @@
 package gestorAplicacion.paquete1;
 import gestorAplicacion.paquete2.*;
+import static java.util.Comparator.comparingInt;
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
 import java.util.*;
 import java.util.ArrayList;
 import java.io.Serializable;
@@ -178,6 +182,21 @@ public class Biblioteca implements Serializable{
 		return null;
 	}
 	
+	// Devuelve una lista con las copias disponibles pero sin repetir la misma copia varias veces
+	public List<Copia> listaCopiasUnicas() {
+		List<Copia> lista = copias.stream()
+                .collect(collectingAndThen(toCollection(() -> new TreeSet<>(comparing(Copia::getNombre))),
+                                           ArrayList::new));
+		return lista;
+	}
+	
+	// Devuelve una lista con los pcs disponibles pero sin repetir el mismo pc varias veces
+	public List<PC> listaPcsUnicos() {
+		List<PC> lista = pcs.stream()
+                .collect(collectingAndThen(toCollection(() -> new TreeSet<>(comparing(PC::getNombre))),
+                                           ArrayList::new));
+		return lista;
+	}
 	
 	public void remover(Copia copia) {
 		copias.remove(copia);

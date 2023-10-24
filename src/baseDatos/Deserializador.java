@@ -1,6 +1,6 @@
 package baseDatos;
 
-import gestorAplicacion.paquete1.*;
+import gestorAplicacion.paquete1.*; 
 import gestorAplicacion.paquete2.*;
 import java.util.ArrayList;
 import java.io.File;
@@ -17,6 +17,7 @@ public class Deserializador {
     	deserializarLibros(sis,new File("src\\baseDatos\\temp\\Libros.txt"));
     	deserializarComputadores(sis,new File("src\\baseDatos\\temp\\Computadores.txt"));
     	deserializarAutores(sis,new File("src\\baseDatos\\temp\\Autores.txt"));
+    	deserializarUsuario(sis, new File("src\\baseDatos\\temp\\Usuario.txt"));
     }
 	
 	public static void deserializarBibliotecas(Sistema sis, File ruta) {
@@ -66,7 +67,19 @@ public class Deserializador {
 			System.out.println("Error en la deserializacion de autores");
 		}
 		
+		
 }
 	
+	public static void deserializarUsuario(Sistema sis, File ruta) {
+		try {
+			FileInputStream file = new FileInputStream(ruta);
+			ObjectInputStream obin = new ObjectInputStream(file);
+			sis.setUser((Usuario) obin.readObject());
+			obin.close();
+		} catch (IOException | ClassNotFoundException e) {
+			System.out.println("Error en la deserializacion de autores");
+		}
+	
+	}
 	
 }

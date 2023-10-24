@@ -1,7 +1,8 @@
 package gestorAplicacion.paquete1;
 
-import gestorAplicacion.*;
+import gestorAplicacion.*; 
 import gestorAplicacion.paquete2.Autor;
+import gestorAplicacion.paquete2.Usuario;
 import baseDatos.*;
 import java.util.ArrayList;
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import java.io.Serializable;
 
 public class Sistema implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+	private Usuario user;
 	private ArrayList<Biblioteca> bibliotecas = new ArrayList<>();
 	private ArrayList<Libro> libros = new ArrayList<Libro>();	
 	private ArrayList<Computador> computadores = new ArrayList<Computador>();
@@ -47,5 +48,14 @@ public class Sistema implements Serializable {
 	public void setLibros(ArrayList<Libro> libros) {
 		this.libros = libros;
 	}
+	
+	public Usuario getUser() {
+		return user;
+	}
+	
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
+	
 	
 }
