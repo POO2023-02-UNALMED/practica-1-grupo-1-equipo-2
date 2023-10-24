@@ -557,8 +557,7 @@ public class Main {
 	        double valorMulta = calcularValorMulta(diasDeRetraso);
 
 	        // Crear una nueva multa y agregarla al usuario
-	        Multa multa = new Multa(numeroMultas,"Retraso en la devolución", new Date(), user);
-	        numeroMultas++;
+	        Multa multa = new Multa("Retraso en la devolución", new Date(), user);
 	        user.getMultas().add(multa);
 
 	        System.out.println("¡Préstamo devuelto con retraso de " + diasDeRetraso + " días! Se ha generado una multa de $" + valorMulta);
@@ -580,28 +579,27 @@ public class Main {
 	}
 
 	public static void gestionMultas() {
-		Multa prueba = new Multa(numeroMultas, "Por andar mamando pene", new Date(), user);
-		numeroMultas++;
-		user.getMultas().add(prueba);
+		if(user.getMultas().isEmpty()) {
+			Multa prueba = new Multa("Retraso en la devolución.", new Date(), user);
+			user.getMultas().add(prueba);
+		}
 	    List<Multa> multasPendientes = user.getMultas();
 	    if (multasPendientes.isEmpty()) {
 	        System.out.println("No tienes multas pendientes.");
 	    } else {
 	        System.out.println("Multas pendientes:");
-	        int i = 0;
 	        for (Multa multa : multasPendientes) {
-				System.out.println(i+". Tipo: " + multa.getTipo().toString() + ", Fecha: " + multa.getFechaImpuesta());
-				i++;
+				System.out.println("- ID: "+multa.getIdMulta()+" Tipo: " + multa.getTipo().toString() + ", Fecha: " + multa.getFechaImpuesta());
 	        }
 		    // Solicita al usuario que ingrese el ID de la multa que desea pagar
-		    System.out.print("Ingresa el numeral de la multa que deseas pagar: ");
+		    System.out.print("Ingresa el ID de la multa que deseas pagar: ");
 		    int MultaAPagar = sc.nextInt();
 		    sc.nextLine(); // Limpia el buffer
 
 		    // Busca la multa en la lista de multas del usuario
 		    Multa multaAPagar = null;
 		    for (Multa multa : multasPendientes) {
-		        if (multa.getTipo().equals(multasPendientes.get(MultaAPagar).getTipo()) && multa.getFechaImpuesta().equals(multasPendientes.get(MultaAPagar).getFechaImpuesta())) {
+		        if (multa.getIdMulta() == MultaAPagar) {
 		            multaAPagar = multa;
 		            break;
 		        }
