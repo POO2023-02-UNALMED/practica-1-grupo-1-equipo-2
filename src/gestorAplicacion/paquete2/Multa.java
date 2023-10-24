@@ -48,7 +48,7 @@ public class Multa implements Serializable{
         // Eliminar la multa del registro del usuario
         usuario.eliminarMulta(this);
         // Notificar al usuario sobre el pago exitoso de la multa
-        return("La multa de tipo '" + tipo + "' con ID " + idMulta + " ha sido pagada.");
+        return("La multa de tipo '" + tipo + "' con Fecha " + fechaImpuesta + " ha sido pagada.");
     }
 
 }

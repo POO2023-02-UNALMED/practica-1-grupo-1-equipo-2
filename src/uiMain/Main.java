@@ -580,32 +580,34 @@ public class Main {
 	}
 
 	public static void gestionMultas() {
+		Multa prueba = new Multa(numeroMultas, "Por andar mamando pene", new Date(), user);
+		numeroMultas++;
+		user.getMultas().add(prueba);
 	    List<Multa> multasPendientes = user.getMultas();
-
 	    if (multasPendientes.isEmpty()) {
 	        System.out.println("No tienes multas pendientes.");
 	    } else {
 	        System.out.println("Multas pendientes:");
+	        int i = 0;
 	        for (Multa multa : multasPendientes) {
-	            System.out.println("ID: " + multa.getIdMulta() + ", Tipo: " + multa.getTipo() + ", Fecha: " + multa.getFechaImpuesta());
+				System.out.println(i+". Tipo: " + multa.getTipo().toString() + ", Fecha: " + multa.getFechaImpuesta());
+				i++;
 	        }
 		    // Solicita al usuario que ingrese el ID de la multa que desea pagar
-		    System.out.print("Ingresa el ID de la multa que deseas pagar: ");
-		    int idMultaAPagar = sc.nextInt();
+		    System.out.print("Ingresa el numeral de la multa que deseas pagar: ");
+		    int MultaAPagar = sc.nextInt();
 		    sc.nextLine(); // Limpia el buffer
 
 		    // Busca la multa en la lista de multas del usuario
 		    Multa multaAPagar = null;
-		    List<Multa> multasPendientes1 = user.getMultas();
-		    for (Multa multa : multasPendientes1) {
-		        if (multa.getIdMulta() == idMultaAPagar) {
+		    for (Multa multa : multasPendientes) {
+		        if (multa.getTipo().equals(multasPendientes.get(MultaAPagar).getTipo()) && multa.getFechaImpuesta().equals(multasPendientes.get(MultaAPagar).getFechaImpuesta())) {
 		            multaAPagar = multa;
 		            break;
 		        }
 		    }
 
 		    if (multaAPagar != null) {
-		        // Realiza el pago de la multa
 		        String mensajePago = multaAPagar.pagarMulta();
 		        System.out.println(mensajePago);
 		    } else {
